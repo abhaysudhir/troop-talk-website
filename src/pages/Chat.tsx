@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Send } from "lucide-react";
+import TypingIndicator from "@/components/TypingIndicator";
 
 interface Message {
   id: number;
@@ -13,29 +14,56 @@ interface Message {
 const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const [isAiTyping, setIsAiTyping] = useState(false);
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const newMessage: Message = {
+    const userMessage: Message = {
       id: Date.now(),
       content: input,
       sender: "user",
     };
 
-    setMessages([...messages, newMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
+    setIsAiTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      const response = await fetch(
+        `http://0.0.0.0:4000/ask?question=${encodeURIComponent(input)}&top_k=3`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch AI response");
+      }
+
+      const responseData = await response.json();
       const aiResponse: Message = {
         id: Date.now() + 1,
-        content: "Thank you for your message. How can I help you with your scouting journey today?",
+        content: responseData.answer || "No answer provided.",
         sender: "ai",
       };
+
       setMessages((prev) => [...prev, aiResponse]);
-    }, 1000);
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+
+      const errorResponse: Message = {
+        id: Date.now() + 2,
+        content: "Error: Unable to fetch response from the server.",
+        sender: "ai",
+      };
+
+      setMessages((prev) => [...prev, errorResponse]);
+    } finally {
+      setIsAiTyping(false);
+    }
   };
 
   return (
@@ -76,6 +104,7 @@ const Chat = () => {
               </Card>
             </div>
           ))}
+          {isAiTyping && <TypingIndicator />}
         </div>
       </main>
 
