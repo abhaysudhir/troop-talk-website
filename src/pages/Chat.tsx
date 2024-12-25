@@ -39,7 +39,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-scout-background">
+    <div className="flex flex-col h-screen bg-gray-50">
       <header className="bg-white border-b p-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
@@ -49,8 +49,8 @@ const Chat = () => {
               className="h-10 w-auto"
             />
             <div>
-              <h1 className="text-xl font-bold text-scout-primary">Troop 125</h1>
-              <p className="text-sm text-scout-muted">Scout Chat Assistant</p>
+              <h1 className="text-xl font-bold" style={{ color: "#ec8e13" }}>Troop 125</h1>
+              <p className="text-sm" style={{ color: "#99784D" }}>Scout Chat Assistant</p>
             </div>
           </div>
         </div>
@@ -68,8 +68,8 @@ const Chat = () => {
               <Card
                 className={`p-4 max-w-[80%] ${
                   message.sender === "user"
-                    ? "bg-scout-primary text-white"
-                    : "bg-white"
+                    ? "bg-[#ec8e13] text-white"
+                    : "bg-white border-[#99784D] border"
                 }`}
               >
                 <p className="text-sm">{message.content}</p>
@@ -86,9 +86,12 @@ const Chat = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
-              className="flex-1"
+              className="flex-1 border-[#99784D]"
             />
-            <Button type="submit" className="bg-scout-primary hover:bg-scout-accent">
+            <Button 
+              type="submit" 
+              className="bg-[#ec8e13] hover:bg-[#99784D] transition-colors"
+            >
               <Send className="h-5 w-5" />
             </Button>
           </form>
