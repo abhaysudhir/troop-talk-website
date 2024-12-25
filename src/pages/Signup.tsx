@@ -19,7 +19,6 @@ const Signup = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Add signup logic here
     toast({
       title: "Welcome to Scout Chat!",
       description: "Your account has been created successfully.",
@@ -28,7 +27,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-scout-background p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-md space-y-8 animate-fade-in">
         <div className="text-center">
           <img
@@ -36,21 +35,21 @@ const Signup = () => {
             alt="Boy Scouts Logo"
             className="mx-auto h-24 w-auto mb-6"
           />
-          <h2 className="text-3xl font-bold text-scout-primary mb-2">
+          <h2 className="text-3xl font-bold mb-2" style={{ color: "#ec8e13" }}>
             Create Account
           </h2>
-          <p className="text-scout-muted">Join your troop's chat</p>
+          <p className="text-[#99784D]">Join your troop's chat</p>
         </div>
 
         <Card className="p-6 shadow-lg border-0">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
               <div className="relative">
-                <User className="absolute left-3 top-3 h-5 w-5 text-scout-muted" />
+                <User className="absolute left-3 top-3 h-5 w-5 text-[#99784D]" />
                 <Input
                   type="text"
                   placeholder="Username"
-                  className="pl-10"
+                  className="pl-10 border-[#99784D] focus-visible:ring-[#ec8e13]"
                   value={formData.username}
                   onChange={(e) =>
                     setFormData({ ...formData, username: e.target.value })
@@ -60,11 +59,11 @@ const Signup = () => {
               </div>
 
               <div className="relative">
-                <Lock className="absolute left-3 top-3 h-5 w-5 text-scout-muted" />
+                <Lock className="absolute left-3 top-3 h-5 w-5 text-[#99784D]" />
                 <Input
                   type="password"
                   placeholder="Password"
-                  className="pl-10"
+                  className="pl-10 border-[#99784D] focus-visible:ring-[#ec8e13]"
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
@@ -76,6 +75,7 @@ const Signup = () => {
               <Input
                 type="text"
                 placeholder="Troop Number (e.g., 125)"
+                className="border-[#99784D] focus-visible:ring-[#ec8e13]"
                 value={formData.troopNumber}
                 onChange={(e) =>
                   setFormData({ ...formData, troopNumber: e.target.value })
@@ -84,11 +84,11 @@ const Signup = () => {
               />
 
               <div className="relative">
-                <MapPin className="absolute left-3 top-3 h-5 w-5 text-scout-muted" />
+                <MapPin className="absolute left-3 top-3 h-5 w-5 text-[#99784D]" />
                 <Input
                   type="text"
                   placeholder="State"
-                  className="pl-10"
+                  className="pl-10 border-[#99784D] focus-visible:ring-[#ec8e13]"
                   value={formData.state}
                   onChange={(e) =>
                     setFormData({ ...formData, state: e.target.value })
@@ -100,6 +100,7 @@ const Signup = () => {
               <Input
                 type="text"
                 placeholder="City"
+                className="border-[#99784D] focus-visible:ring-[#ec8e13]"
                 value={formData.city}
                 onChange={(e) =>
                   setFormData({ ...formData, city: e.target.value })
@@ -108,17 +109,20 @@ const Signup = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full bg-scout-primary hover:bg-scout-accent">
+            <Button 
+              type="submit" 
+              className="w-full bg-[#ec8e13] hover:bg-[#99784D] transition-colors"
+            >
               Create Account
             </Button>
           </form>
 
           <div className="mt-4 text-center">
-            <p className="text-sm text-scout-muted">
+            <p className="text-sm text-[#99784D]">
               Already have an account?{" "}
               <button
                 onClick={() => navigate("/login")}
-                className="text-scout-primary hover:text-scout-accent transition-colors"
+                className="text-[#ec8e13] hover:text-[#99784D] transition-colors"
               >
                 Sign in
               </button>

@@ -17,7 +17,6 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Add authentication logic here
     toast({
       title: "Welcome back!",
       description: "Successfully logged in.",
@@ -26,7 +25,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-scout-background p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-md space-y-8 animate-fade-in">
         <div className="text-center">
           <img
@@ -34,21 +33,21 @@ const Login = () => {
             alt="Boy Scouts Logo"
             className="mx-auto h-24 w-auto mb-6"
           />
-          <h2 className="text-3xl font-bold text-scout-primary mb-2">
+          <h2 className="text-3xl font-bold mb-2" style={{ color: "#ec8e13" }}>
             Welcome Back
           </h2>
-          <p className="text-scout-muted">Sign in to continue</p>
+          <p className="text-[#99784D]">Sign in to continue</p>
         </div>
 
         <Card className="p-6 shadow-lg border-0">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
               <div className="relative">
-                <User className="absolute left-3 top-3 h-5 w-5 text-scout-muted" />
+                <User className="absolute left-3 top-3 h-5 w-5 text-[#99784D]" />
                 <Input
                   type="text"
                   placeholder="Username"
-                  className="pl-10"
+                  className="pl-10 border-[#99784D] focus-visible:ring-[#ec8e13]"
                   value={formData.username}
                   onChange={(e) =>
                     setFormData({ ...formData, username: e.target.value })
@@ -58,11 +57,11 @@ const Login = () => {
               </div>
 
               <div className="relative">
-                <Lock className="absolute left-3 top-3 h-5 w-5 text-scout-muted" />
+                <Lock className="absolute left-3 top-3 h-5 w-5 text-[#99784D]" />
                 <Input
                   type="password"
                   placeholder="Password"
-                  className="pl-10"
+                  className="pl-10 border-[#99784D] focus-visible:ring-[#ec8e13]"
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
@@ -74,6 +73,7 @@ const Login = () => {
               <Input
                 type="text"
                 placeholder="Troop Number (e.g., 125)"
+                className="border-[#99784D] focus-visible:ring-[#ec8e13]"
                 value={formData.troopNumber}
                 onChange={(e) =>
                   setFormData({ ...formData, troopNumber: e.target.value })
@@ -82,17 +82,20 @@ const Login = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full bg-scout-primary hover:bg-scout-accent">
+            <Button 
+              type="submit" 
+              className="w-full bg-[#ec8e13] hover:bg-[#99784D] transition-colors"
+            >
               Sign In
             </Button>
           </form>
 
           <div className="mt-4 text-center">
-            <p className="text-sm text-scout-muted">
+            <p className="text-sm text-[#99784D]">
               Don't have an account?{" "}
               <button
                 onClick={() => navigate("/signup")}
-                className="text-scout-primary hover:text-scout-accent transition-colors"
+                className="text-[#ec8e13] hover:text-[#99784D] transition-colors"
               >
                 Sign up
               </button>
