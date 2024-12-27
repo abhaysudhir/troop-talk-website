@@ -4,10 +4,11 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview --host 0.0.0.0",
-        "start": "vite preview --host 0.0.0.0"
+    "start": "npx serve -s dist",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
     },
     "dependencies": {
         "@hookform/resolvers": "^3.9.0",

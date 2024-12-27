@@ -7,12 +7,22 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
-    mode === 'development' && componentTagger(),
+    mode === "development" && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: '/', // Ensure the base path is set correctly for production
+  base: "/", // Keep this as '/' unless deployed under a subpath
+  server: {
+    host: "0.0.0.0", // Expose the server to the network
+    port: 8080,      // Ensure the port matches the App Platform settings
+  },
+  build: {
+    outDir: "dist", // Output directory for production build
+    rollupOptions: {
+      input: "index.html", // Specify entry point explicitly if needed
+    },
+  },
 }));
