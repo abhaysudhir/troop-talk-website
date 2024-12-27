@@ -31,7 +31,7 @@ const Signup = () => {
       <div className="w-full max-w-md space-y-8 animate-fade-in">
         <div className="text-center">
           <img
-            src="/scout-logo.png"
+            src="https://i.imgur.com/XDgqhzt.png"
             alt="Boy Scouts Logo"
             className="mx-auto h-24 w-auto mb-6"
           />

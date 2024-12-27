@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Send } from "lucide-react";
+import TypingIndicator from "@/components/TypingIndicator";
+import { marked } from "marked"; // Import marked for Markdown conversion
 
 interface Message {
   id: number;
@@ -13,29 +15,56 @@ interface Message {
 const Chat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const [isAiTyping, setIsAiTyping] = useState(false);
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const newMessage: Message = {
+    const userMessage: Message = {
       id: Date.now(),
       content: input,
       sender: "user",
     };
 
-    setMessages([...messages, newMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
+    setIsAiTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      const response = await fetch(
+        `http://0.0.0.0:4000/ask?question=${encodeURIComponent(input)}&top_k=5`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch AI response");
+      }
+
+      const responseData = await response.json();
       const aiResponse: Message = {
         id: Date.now() + 1,
-        content: "Thank you for your message. How can I help you with your scouting journey today?",
+        content: responseData.answer || "No answer provided.",
         sender: "ai",
       };
+
       setMessages((prev) => [...prev, aiResponse]);
-    }, 1000);
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+
+      const errorResponse: Message = {
+        id: Date.now() + 2,
+        content: "Error: Unable to fetch response from the server.",
+        sender: "ai",
+      };
+
+      setMessages((prev) => [...prev, errorResponse]);
+    } finally {
+      setIsAiTyping(false);
+    }
   };
 
   return (
@@ -44,7 +73,7 @@ const Chat = () => {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img
-              src="/scout-logo.png"
+              src="https://i.imgur.com/XDgqhzt.png"
               alt="Boy Scouts Logo"
               className="h-10 w-auto"
             />
@@ -72,10 +101,29 @@ const Chat = () => {
                     : "bg-white border-[#99784D] border"
                 }`}
               >
-                <p className="text-sm">{message.content}</p>
+                {message.sender === "ai" ? (
+                  <div
+                    className="text-sm"
+                    dangerouslySetInnerHTML={{
+                      __html: marked(message.content).replace(
+                        /<table>/g,
+                        `<table class="table-auto border-collapse w-full text-sm text-left text-gray-700 border border-gray-300 my-4">`
+                      ).replace(
+                        /<th>/g,
+                        `<th class="border border-gray-300 p-2 bg-[#ec8e13] text-white">`
+                      ).replace(
+                        /<td>/g,
+                        `<td class="border border-gray-300 p-2">`
+                      )
+                    }}
+                  />
+                ) : (
+                  <p className="text-sm">{message.content}</p>
+                )}
               </Card>
             </div>
           ))}
+          {isAiTyping && <TypingIndicator />}
         </div>
       </main>
 
