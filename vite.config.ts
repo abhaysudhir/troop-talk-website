@@ -14,5 +14,5 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: '/',  // Ensure this is set to '/' for DigitalOcean App Platform (default domain)
+  base: '/', // Ensure the base path is set correctly for production
 }));
