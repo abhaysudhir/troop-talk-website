@@ -33,7 +33,7 @@ const Chat = () => {
 
     try {
       const response = await fetch(
-        `https://64.23.142.139:443/ask?question=${encodeURIComponent(input)}&top_k=5`,
+        `http://64.23.142.139/ask?question=${encodeURIComponent(input)}&top_k=5`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
