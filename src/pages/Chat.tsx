@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Send } from "lucide-react";
 import TypingIndicator from "@/components/TypingIndicator";
 import { marked } from "marked"; // Import marked for Markdown conversion
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
 
 interface Message {
   id: number;

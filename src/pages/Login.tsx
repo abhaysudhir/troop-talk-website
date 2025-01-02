@@ -5,7 +5,22 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { Lock, User } from "lucide-react";
+import { SignIn } from '@clerk/clerk-react';
 
+const Login = () => {
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <SignIn 
+        path="/login"
+        routing="path"
+        redirectUrl="/dashboard" // Replace with the path to your app's dashboard or homepage
+      />
+    </div>
+  );
+};
+
+export default Login;
+/*
 const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -108,3 +123,4 @@ const Login = () => {
 };
 
 export default Login;
+*/
