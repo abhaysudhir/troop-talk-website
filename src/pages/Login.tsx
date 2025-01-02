@@ -13,11 +13,13 @@ const Login = () => {
       <SignIn 
         path="/login"
         routing="path"
-        redirectUrl="/dashboard" // Replace with the path to your app's dashboard or homepage
+        redirectUrl="/chat" // Replace with the path to your app's dashboard or homepage
+        signUpUrl="/signup" // Redirect to the Signup page
       />
     </div>
   );
 };
+
 
 export default Login;
 /*
