@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { SignedIn, SignedOut } from '@clerk/clerk-react'
+import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Chat from './pages/Chat';
@@ -12,7 +12,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Redirect to /chat if signed in */}
+        {/* Root route */}
         <Route
           path="/"
           element={
@@ -21,17 +21,33 @@ export default function App() {
                 <Navigate to="/chat" replace />
               </SignedIn>
               <SignedOut>
-                <Navigate to="/login" replace />
+                <Navigate to="/sign-in" replace />
               </SignedOut>
             </>
           }
         />
-        {/* Login page */}
-        <Route path="/login" element={<Login />} />
-        {/* Signup page */}
-        <Route path="/signup" element={<Signup />} />
-        {/* Chat page */}
-        <Route path="/chat" element={<Chat />} />
+
+        {/* Auth routes - Note the /* for nested routes */}
+        <Route path="/sign-in/*" element={<Login />} />
+        <Route path="/sign-up/*" element={<Signup />} />
+
+        {/* Protected route */}
+        <Route
+          path="/chat"
+          element={
+            <>
+              <SignedIn>
+                <Chat />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
+
+        {/* Catch all route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
