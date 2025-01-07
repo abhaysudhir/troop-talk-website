@@ -1,22 +1,28 @@
 import { SignUp } from '@clerk/clerk-react';
+import { Helmet } from 'react-helmet-async';
 
 const Signup = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <SignUp 
-        routing="path"
-        path="/sign-up"
-        signInUrl="/sign-in"
-        afterSignUpUrl="/chat"
-        appearance={{
-          layout: {
-            socialButtonsPlacement: "bottom",
-            socialButtonsVariant: "iconButton",
-            termsPageUrl: "https://clerk.com/terms"
-          }
-        }}
-      />
-    </div>
+    <>
+      <Helmet>
+        <title>Sign Up | Troop Talk</title>
+      </Helmet>
+      <div className="min-h-screen flex items-center justify-center">
+        <SignUp 
+          routing="path"
+          path="/sign-up"
+          signInUrl="/sign-in"
+          afterSignUpUrl="/chat"
+          appearance={{
+            layout: {
+              socialButtonsPlacement: "bottom",
+              socialButtonsVariant: "iconButton",
+              termsPageUrl: "https://clerk.com/terms"
+            }
+          }}
+        />
+      </div>
+    </>
   );
 };
 

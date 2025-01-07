@@ -19,7 +19,6 @@ createRoot(document.getElementById("root")!).render(
           afterSignInUrl="/chat"
           afterSignUpUrl="/chat"
           navigate={(to) => window.location.href = to}
-          allowedPaths={["/terms-and-conditions.html"]}
         >
             <App />
         </ClerkProvider>
