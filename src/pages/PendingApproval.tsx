@@ -1,8 +1,27 @@
 import { Card } from "@/components/ui/card";
 import { Helmet } from 'react-helmet-async';
-import { UserButton } from "@clerk/clerk-react";
+import { UserButton, useUser, useOrganization } from "@clerk/clerk-react";
+import { useEffect } from 'react';
 
 const PendingApprovalPage = () => {
+  const { user } = useUser();
+  const { organization } = useOrganization();
+
+  useEffect(() => {
+    const createOrganizationInvitation = async () => {
+      if (!user || !organization) return;
+
+      try {
+        await organization.createMembershipRequest();
+        console.log('Membership request created successfully');
+      } catch (error) {
+        console.error('Error creating membership request:', error);
+      }
+    };
+
+    createOrganizationInvitation();
+  }, [user, organization]);
+
   return (
     <>
       <Helmet>
