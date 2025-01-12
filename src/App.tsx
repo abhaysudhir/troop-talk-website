@@ -7,6 +7,7 @@ import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Chat from './pages/Chat';
+import PendingApproval from './pages/PendingApproval';
 import { HelmetProvider } from 'react-helmet-async';
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
           {/* Auth routes - Note the /* for nested routes */}
           <Route path="/sign-in/*" element={<Login />} />
           <Route path="/sign-up/*" element={<Signup />} />
+          <Route path="/pending-approval" element={<PendingApproval />} />
 
           {/* Protected route */}
           <Route

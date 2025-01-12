@@ -12,7 +12,7 @@ const Signup = () => {
           routing="path"
           path="/sign-up"
           signInUrl="/sign-in"
-          afterSignUpUrl="/chat"
+          afterSignUpUrl="/pending-approval"
           appearance={{
             layout: {
               socialButtonsPlacement: "bottom",

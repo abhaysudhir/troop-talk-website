@@ -17,8 +17,7 @@ createRoot(document.getElementById("root")!).render(
           signInUrl="/sign-in"
           signUpUrl="/sign-up"
           afterSignInUrl="/chat"
-          afterSignUpUrl="/chat"
-          navigate={(to) => window.location.href = to}
+          afterSignUpUrl="/pending-approval"
         >
             <App />
         </ClerkProvider>
