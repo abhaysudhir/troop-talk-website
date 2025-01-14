@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Chat from './pages/Chat';
 import PendingApproval from './pages/PendingApproval';
+import AdminDashboard from './pages/AdminDashboard';
 import { HelmetProvider } from 'react-helmet-async';
 
 export default function App() {
@@ -35,7 +36,21 @@ export default function App() {
           <Route path="/sign-up/*" element={<Signup />} />
           <Route path="/pending-approval" element={<PendingApproval />} />
 
-          {/* Protected route */}
+          {/* Protected routes */}
+          <Route
+            path="/admin"
+            element={
+              <>
+                <SignedIn>
+                  <AdminDashboard />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }
+          />
+
           <Route
             path="/chat"
             element={
