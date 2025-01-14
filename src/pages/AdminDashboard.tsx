@@ -17,7 +17,7 @@ const AdminDashboard: React.FC = () => {
 
       try {
         const memberships = await organization.getMemberships();
-        console.log('Organization Members:', memberships.data);
+        console.log('Organization Members:', memberships);
         // Filter for members with role org:guest
         const guestMembers = memberships.data.filter(member => member.role === 'org:guest');
         setMembers(guestMembers);
@@ -36,16 +36,21 @@ const AdminDashboard: React.FC = () => {
     if (!organization) return;
 
     try {
+      // Get all memberships and find the specific one
+      const memberships = await organization.getMemberships();
+      const membership = memberships.data.find(m => m.id === memberId);
+      
+      if (!membership || !membership.publicUserData?.userId) {
+        console.error('Could not find membership or user ID');
+        return;
+      }
+
+      const userId = membership.publicUserData.userId;
+
       if (approved) {
-        // Get all memberships and find the specific one
-        const memberships = await organization.getMemberships();
-        const membership = memberships.data.find(m => m.id === memberId);
-        if (membership) {
-          // Update its role
-          await membership.update({ role: 'org:member' });
-        }
+        await organization.updateMember({ userId, role: 'org:member' });
       } else {
-        await organization.removeMember(memberId);
+        await organization.removeMember(userId);
       }
       
       // Remove the member from the list
