@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { useOrganization } from "@clerk/clerk-react";
-import type { OrganizationMembershipResource } from "@clerk/types";
 import "./AdminDashboard.css";
+
+type Member = {
+    id: string;
+    role: string;
+    publicUserData?: {
+        userId?: string;
+        firstName?: string;
+        lastName?: string;
+        identifier?: string;
+    };
+};
 
 const AdminDashboard: React.FC = () => {
     const { organization } = useOrganization();
-    const [members, setMembers] = useState<OrganizationMembershipResource[]>(
-        []
-    );
+    const [members, setMembers] = useState<Member[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchMembers = async () => {
-            if (!organization) return;
-            setLoading(true);
-            setError(null);
+            if (!organization) {
+                setError("No organization found");
+                setLoading(false);
+                return;
+            }
 
             try {
                 const memberships = await organization.getMemberships();
                 console.log("Organization Members:", memberships);
+                
                 // Filter for members with role org:guest
-                const guestMembers = memberships.data.filter(
+                const guestMembers = memberships.filter(
                     (member) => member.role === "org:guest"
-                );
+                ) as Member[];
                 setMembers(guestMembers);
             } catch (error) {
                 console.error("Error:", error);
@@ -33,8 +44,11 @@ const AdminDashboard: React.FC = () => {
             }
         };
 
-        fetchMembers();
-    }, [organization]);
+        // Only fetch once when component mounts
+        if (organization) {
+            fetchMembers();
+        }
+    }, []); // Empty dependency array means it only runs once on mount
 
     const handleRequest = async (memberId: string, approved: boolean) => {
         if (!organization) return;
@@ -42,9 +56,9 @@ const AdminDashboard: React.FC = () => {
         try {
             // Get all memberships and find the specific one
             const memberships = await organization.getMemberships();
-            const membership = memberships.data.find((m) => m.id === memberId);
+            const membership = memberships.find((m) => m.id === memberId);
 
-            if (!membership || !membership.publicUserData?.userId) {
+            if (!membership?.publicUserData?.userId) {
                 console.error("Could not find membership or user ID");
                 return;
             }
