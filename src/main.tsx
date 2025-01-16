@@ -12,13 +12,12 @@ if (!PUBLISHABLE_KEY) {
 
 createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <ClerkProvider
-            publishableKey={PUBLISHABLE_KEY}
-            signInUrl="/sign-in"
-            signUpUrl="/sign-up"
-            afterSignInUrl="/chat"
-            afterSignUpUrl="/chat"
-            navigate={(to) => (window.location.href = to)}
+        <ClerkProvider 
+          publishableKey={PUBLISHABLE_KEY}
+          signInUrl="/sign-in"
+          signUpUrl="/sign-up"
+          afterSignInUrl="/chat"
+          afterSignUpUrl="/pending-approval"
         >
             <App />
         </ClerkProvider>
