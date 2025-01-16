@@ -16,7 +16,7 @@ const Signup = () => {
                     appearance={{
                         layout: {
                             socialButtonsPlacement: "top",
-                            socialButtonsVariant: "iconButton",
+                            socialButtonsVariant: "blockButton",
                             termsPageUrl:
                                 "https://trooptalk.ai/terms-and-conditions.html",
                         },
