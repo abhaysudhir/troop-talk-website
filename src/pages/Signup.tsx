@@ -3,12 +3,14 @@ import { SignUp } from "@clerk/clerk-react";
 import { Card } from "@/components/ui/card";
 import { Helmet } from "react-helmet-async";
 
+const T125_ORG_ID = import.meta.env.VITE_T125_ORG_ID;
+
 // Hardcoded troops for now - this would come from your backend
 const troops = [
     {
-        id: "org_2rT8CEMs2yJdg1oW0QOX7oNAhrc",
+        id: T125_ORG_ID,
         name: "Troop 125",
-        location: "San Francisco, CA",
+        location: "Fremont, CA",
     },
 ];
 
