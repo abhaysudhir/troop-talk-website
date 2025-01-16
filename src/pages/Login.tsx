@@ -1,7 +1,21 @@
-import { SignIn } from "@clerk/clerk-react";
+import { SignIn, useSignIn } from "@clerk/clerk-react";
 import { Helmet } from "react-helmet-async";
+import { useEffect, useState } from "react";
 
 const Login = () => {
+    const [errorMessage, setErrorMessage] = useState("");
+    const { signIn } = useSignIn();
+
+    // Watch for sign-in attempts
+    useEffect(() => {
+        if (signIn?.status === "complete") {
+            setErrorMessage("");
+        }
+        if (signIn?.status === "needs_identifier") {
+            setErrorMessage("No account associated with this email or provider.");
+        }
+    }, [signIn?.status]);
+
     return (
         <>
             <Helmet>
@@ -9,9 +23,6 @@ const Login = () => {
             </Helmet>
             <div className="min-h-screen flex items-center justify-center">
                 <SignIn
-                    routing="path"
-                    path="/sign-in"
-                    signUpUrl="/sign-up"
                     afterSignInUrl="/chat"
                     appearance={{
                         layout: {
@@ -22,6 +33,9 @@ const Login = () => {
                         },
                     }}
                 />
+                {errorMessage && (
+                    <p className="text-sm text-red-500 mt-2">{errorMessage}</p>
+                )}
             </div>
         </>
     );
