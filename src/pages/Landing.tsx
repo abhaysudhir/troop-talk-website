@@ -39,9 +39,9 @@ const Landing = () => {
                             <img
                                 src="https://i.imgur.com/XDgqhzt.png"
                                 alt="Troop Talk Logo"
-                                className="h-10 w-auto"
+                                className="h-16 w-auto"
                             />
-                            <span className="text-2xl font-bold text-[#ec8e13]">Troop Talk</span>
+                            <span className="text-3xl font-bold text-[#ec8e13]">Troop Talk</span>
                         </div>
                         <div className="flex space-x-6 text-[#99784D]">
                             {["features", "information-sources", "benefits"].map((section) => (
@@ -78,7 +78,7 @@ const Landing = () => {
                         <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-4xl mx-auto transform hover:scale-[1.02] transition-transform duration-500">
                             <iframe
                                 className="w-full aspect-video rounded-lg shadow-md"
-                                src="https://www.youtube.com/embed/cm3Tcfni-MY?autoplay=1&mute=1"
+                                src="https://www.youtube.com/embed/4uWh950IFT4?autoplay=1&mute=1"
                                 title="Troop Talk Demo"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
