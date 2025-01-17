@@ -41,7 +41,7 @@ const Landing = () => {
                                 alt="Troop Talk Logo"
                                 className="h-16 w-auto"
                             />
-                            <span className="text-3xl font-bold text-[#ec8e13]">Troop Talk</span>
+                            {/* <span className="hidden md:block text-3xl font-bold text-[#ec8e13]">Troop Talk</span> */}
                         </div>
                         <div className="flex space-x-6 text-[#99784D]">
                             {["features", "information-sources", "benefits"].map((section) => (
