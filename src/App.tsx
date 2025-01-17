@@ -6,6 +6,7 @@ import Chat from './pages/Chat';
 import PendingApproval from './pages/PendingApproval';
 import AdminDashboard from './pages/AdminDashboard';
 import Landing from './pages/Landing';
+import Landing from './pages/Landing';
 import { HelmetProvider } from 'react-helmet-async';
 
 export default function App() {
@@ -48,20 +49,19 @@ export default function App() {
                         }
                     />
 
-                    <Route
-                        path="/chat"
-                        element={
-                            <>
-                                <SignedIn>
-                                    <Chat />
-                                </SignedIn>
-                                <SignedOut>
-                                    <RedirectToSignIn />
-                                </SignedOut>
-                            </>
-                        }
-                    />
-                    */}
+          {/* <Route
+            path="/chat"
+            element={
+              <>
+                <SignedIn>
+                  <Chat />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }
+          /> */}
 
                     {/* Catch all route - redirect everything to root */}
                     <Route path="/*" element={<Navigate to="/" replace />} />
