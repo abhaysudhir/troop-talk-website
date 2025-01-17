@@ -6,6 +6,7 @@ import Chat from './pages/Chat';
 import PendingApproval from './pages/PendingApproval';
 import AdminDashboard from './pages/AdminDashboard';
 import Landing from './pages/Landing';
+import Landing from './pages/Landing';
 import { HelmetProvider } from 'react-helmet-async';
 
 export default function App() {
@@ -13,15 +14,27 @@ export default function App() {
         <HelmetProvider>
             <BrowserRouter>
                 <Routes>
-                    {/* Root route */}
+                    {/* Root route - Landing page */}
                     <Route path="/" element={<Landing />} />
 
-                    {/* Auth routes - Note the /* for nested routes */}
+                    {/* Commented out original routes with conditional logic
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <SignedIn>
+                                    <Navigate to="/chat" replace />
+                                </SignedIn>
+                                <SignedOut>
+                                    <Navigate to="/sign-in" replace />
+                                </SignedOut>
+                            </>
+                        }
+                    />
                     <Route path="/sign-in/*" element={<Login />} />
                     <Route path="/sign-up/*" element={<Signup />} />
                     <Route path="/pending-approval" element={<PendingApproval />} />
 
-                    {/* Protected routes */}
                     <Route
                         path="/admin"
                         element={
@@ -36,22 +49,22 @@ export default function App() {
                         }
                     />
 
-                    <Route
-                        path="/chat"
-                        element={
-                            <>
-                                <SignedIn>
-                                    <Chat />
-                                </SignedIn>
-                                <SignedOut>
-                                    <RedirectToSignIn />
-                                </SignedOut>
-                            </>
-                        }
-                    />
+          {/* <Route
+            path="/chat"
+            element={
+              <>
+                <SignedIn>
+                  <Chat />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }
+          /> */}
 
-                    {/* Catch all route */}
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    {/* Catch all route - redirect everything to root */}
+                    <Route path="/*" element={<Navigate to="/" replace />} />
                 </Routes>
             </BrowserRouter>
         </HelmetProvider>
