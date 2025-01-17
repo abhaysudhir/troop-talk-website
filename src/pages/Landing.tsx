@@ -74,16 +74,13 @@ const Landing = () => {
                             </a>
                         </div>
                         <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-4xl mx-auto transform hover:scale-[1.02] transition-transform duration-500">
-                            <video
-                                className="w-full rounded-lg shadow-md"
-                                autoPlay
-                                muted
-                                loop
-                                playsInline
-                            >
-                                <source src="/public/troop-talk-demo.mp4" type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
+                            <iframe
+                                className="w-full aspect-video rounded-lg shadow-md"
+                                src="https://www.youtube.com/embed/cm3Tcfni-MY?autoplay=1&mute=1"
+                                title="Troop Talk Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
                         </div>
                     </div>
                 </section>
@@ -190,7 +187,6 @@ const Landing = () => {
                                 id="JotFormIFrame-250161040091137"
                                 title="Waitlist Form"
                                 onLoad={() => window.scrollTo(0,0)}
-                                allowTransparency={true}
                                 allow="geolocation; microphone; camera; fullscreen"
                                 src="https://form.jotform.com/250161040091137"
                                 frameBorder="0"
