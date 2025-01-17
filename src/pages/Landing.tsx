@@ -65,7 +65,9 @@ const Landing = () => {
                                 Troop Talk - Your AI Scouting Assistant
                             </h1>
                             <p className="text-xl text-[#99784D] mb-8 max-w-3xl mx-auto animate-fade-in-delay">
-                                Gain Insights, Ask Questions, and bridge the information gap in YOUR Troop
+                                Gain Insights, Ask Questions, and Bridge the Information Gap in your Troop
+                                <br />
+                                Get notified when we launch by <b>joining the waitlist</b>
                             </p>
                             <a href="#waitlist">
                                 <Button className="bg-[#ec8e13] text-white hover:bg-[#99784D] text-lg px-8 py-6 rounded-lg transform hover:scale-105 transition-all duration-300 animate-bounce-subtle">
