@@ -1,12 +1,5 @@
 ## How can I edit this code?
-
 There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/9d64090b-ccfc-4f3f-8412-7f5f640e4847) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
