@@ -1,9 +1,3 @@
-# Welcome to your Lovable project
-
-## Project info
-
-**URL**: https://lovable.dev/projects/9d64090b-ccfc-4f3f-8412-7f5f640e4847
-
 ## How can I edit this code?
 
 There are several ways of editing your application.
@@ -59,10 +53,6 @@ This project is built with .
 - React
 - shadcn-ui
 - Tailwind CSS
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
-
 
 Upcoming Edits/Features:
 - Add Favicon
