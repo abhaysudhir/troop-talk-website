@@ -14,26 +14,14 @@ export default function App() {
             <BrowserRouter>
                 <Routes>
                     {/* Root route - Landing page */}
-                    {/* <Route path="/" element={<Landing />} /> */}
-
-
-                    <Route
-                        path="/"
-                        element={
-                            <>
-                                <SignedIn>
-                                    <Navigate to="/chat" replace />
-                                </SignedIn>
-                                <SignedOut>
-                                    <Navigate to="/sign-in" replace />
-                                </SignedOut>
-                            </>
-                        }
-                    />
+                    <Route path="/" element={<Landing />} />
+                    
+                    {/* Auth routes */}
                     <Route path="/sign-in/*" element={<Login />} />
-                    <Route path="/sign-up/*" element={<Navigate to="/" replace />} />
+                    <Route path="/sign-up/*" element={<Signup />} />
                     <Route path="/pending-approval" element={<PendingApproval />} />
 
+                    {/* Protected routes */}
                     <Route
                         path="/admin"
                         element={
@@ -62,9 +50,8 @@ export default function App() {
                         }
                     />
 
-
-                    {/* Catch all route - redirect everything to root */}
-                    <Route path="/*" element={<Navigate to="/" replace />} />
+                    {/* Catch all route - redirect to landing page */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </BrowserRouter>
         </HelmetProvider>

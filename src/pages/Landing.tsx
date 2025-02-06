@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+    const navigate = useNavigate();
+
     useEffect(() => {
         const script = document.createElement("script");
         script.src = "https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js";
@@ -43,16 +46,24 @@ const Landing = () => {
                             />
                             {/* <span className="hidden md:block text-3xl font-bold text-[#ec8e13]">Troop Talk</span> */}
                         </div>
-                        <div className="flex space-x-6 text-[#99784D]">
-                            {["features", "information-sources", "benefits"].map((section) => (
-                                <a
-                                    key={section}
-                                    href={`#${section}`}
-                                    className="hover:text-[#ec8e13] transition-colors duration-300"
-                                >
-                                    {section.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                                </a>
-                            ))}
+                        <div className="flex items-center space-x-6">
+                            <div className="text-[#99784D] space-x-6">
+                                {["features", "information-sources", "benefits"].map((section) => (
+                                    <a
+                                        key={section}
+                                        href={`#${section}`}
+                                        className="hover:text-[#ec8e13] transition-colors duration-300"
+                                    >
+                                        {section.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                                    </a>
+                                ))}
+                            </div>
+                            <Button
+                                onClick={() => navigate('/sign-in')}
+                                className="bg-[#ec8e13] text-white hover:bg-[#99784D] transition-colors ml-6"
+                            >
+                                Sign In
+                            </Button>
                         </div>
                     </div>
                 </nav>
