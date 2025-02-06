@@ -14,9 +14,9 @@ export default function App() {
             <BrowserRouter>
                 <Routes>
                     {/* Root route - Landing page */}
-                    <Route path="/" element={<Landing />} />
+                    {/* <Route path="/" element={<Landing />} /> */}
 
-                    {/* Commented out original routes with conditional logic
+
                     <Route
                         path="/"
                         element={
@@ -31,7 +31,7 @@ export default function App() {
                         }
                     />
                     <Route path="/sign-in/*" element={<Login />} />
-                    <Route path="/sign-up/*" element={<Signup />} />
+                    <Route path="/sign-up/*" element={<Navigate to="/" replace />} />
                     <Route path="/pending-approval" element={<PendingApproval />} />
 
                     <Route
@@ -61,7 +61,7 @@ export default function App() {
                             </>
                         }
                     />
-                    */}
+
 
                     {/* Catch all route - redirect everything to root */}
                     <Route path="/*" element={<Navigate to="/" replace />} />
