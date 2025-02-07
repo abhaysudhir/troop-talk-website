@@ -46,7 +46,7 @@ const Chat = () => {
             const response = await fetch(
                 `https://tt-backend-scripts-bigvm.ondigitalocean.app/ask?question=${encodeURIComponent(
                     input
-                )}&top_k=5`,
+                )}&top_k=55`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
