@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Send, Trash2 } from "lucide-react";
+import { Send } from "lucide-react";
 import TypingIndicator from "@/components/TypingIndicator";
 import { marked } from "marked"; // Import marked for Markdown conversion
 import { UserButton, useUser } from "@clerk/clerk-react";
@@ -94,21 +94,6 @@ const Chat = () => {
         }
     };
 
-    // Function to clear chat history
-    const clearChat = () => {
-        setMessages([]);
-        // Re-add the welcome message after clearing
-        setTimeout(() => {
-            setMessages([
-                {
-                    id: Date.now(),
-                    content: "Hi, I'm Troop Talk. How can I help you with scouting today?",
-                    sender: "ai"
-                }
-            ]);
-        }, 100);
-    };
-
     return (
         <>
             <Helmet>
@@ -137,25 +122,13 @@ const Chat = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center space-x-3">
-                            <Button
-                                onClick={clearChat}
-                                variant="outline"
-                                size="sm"
-                                className="text-gray-500 hover:text-[#ec8e13] border-gray-200 hover:border-[#ec8e13]/50"
-                                title="Clear chat"
-                            >
-                                <Trash2 className="h-4 w-4 mr-1" />
-                                <span className="hidden sm:inline">Clear</span>
-                            </Button>
-                            <UserButton />
-                        </div>
+                        <UserButton />
                     </div>
                 </header>
 
                 {/* Main Chat Area */}
                 <main className="flex-1 overflow-y-auto p-4 flex flex-col items-center">
-                    {/* Welcome Container - Only shown when no messages or just the welcome message */}
+                    {/* Welcome Container - Only shown when no messages */}
                     {messages.length <= 1 && (
                         <div className="flex flex-col items-center justify-center max-w-md mx-auto my-12 text-center">
                             <div className="bg-[#ec8e13]/10 rounded-full p-6 mb-6">

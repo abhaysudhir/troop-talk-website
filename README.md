@@ -50,3 +50,10 @@ This project is built with .
 Upcoming Edits/Features:
 - Add Favicon
 - 
+
+
+v2 Feature List
+- Revamped UI
+- Clear Chat
+- Context?
+- Generate Graphs?

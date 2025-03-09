@@ -130,11 +130,11 @@ const Landing = () => {
                                 <div className="relative bg-white p-4 rounded-xl shadow-lg">
                                     <div className="absolute -top-3 -right-3 bg-[#ec8e13] text-white text-xs px-2 py-1 rounded-full">
                                         v1.0
-                                    </div>
+                        </div>
                                     <video
-                                        className="w-full aspect-video rounded-lg shadow-md"
+                                className="w-full aspect-video rounded-lg shadow-md"
                                         src="/troop-talk-demo.mp4"
-                                        title="Troop Talk Demo"
+                                title="Troop Talk Demo"
                                         autoPlay
                                         muted
                                         loop
