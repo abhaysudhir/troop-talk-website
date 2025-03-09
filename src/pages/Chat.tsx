@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Send } from "lucide-react";
 import TypingIndicator from "@/components/TypingIndicator";
 import { marked } from "marked"; // Import marked for Markdown conversion
-import { UserButton } from "@clerk/clerk-react";
+import { UserButton, useUser } from "@clerk/clerk-react";
 import { Helmet } from "react-helmet-async";
 
 interface Message {
@@ -19,6 +19,7 @@ const Chat = () => {
     const [input, setInput] = useState("");
     const [isAiTyping, setIsAiTyping] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const { user } = useUser();
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -137,7 +138,7 @@ const Chat = () => {
                                     className="h-16 w-auto"
                                 />
                             </div>
-                            <h2 className="text-2xl font-bold mb-2">Hi, Scout</h2>
+                            <h2 className="text-2xl font-bold mb-2">Hi, {user?.firstName || 'Scout'}</h2>
                             <p className="text-xl mb-8">Can I help you with anything?</p>
                             <p className="text-gray-500 text-sm max-w-xs">
                                 Ready to assist you with anything you need. From answering questions about scouting to providing recommendations. Let's get started!
@@ -205,8 +206,20 @@ const Chat = () => {
                                 </div>
                                 {message.sender === "user" && (
                                     <div className="flex-shrink-0 ml-3">
-                                        <div className="w-8 h-8 rounded-full bg-[#ec8e13] flex items-center justify-center">
-                                            <span className="text-white text-xs font-bold">YOU</span>
+                                        <div className="w-8 h-8 rounded-full overflow-hidden">
+                                            {user?.imageUrl ? (
+                                                <img 
+                                                    src={user.imageUrl} 
+                                                    alt={user.fullName || "User"} 
+                                                    className="h-full w-full object-cover"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-[#ec8e13] flex items-center justify-center">
+                                                    <span className="text-white text-xs font-bold">
+                                                        {user?.firstName?.charAt(0) || user?.lastName?.charAt(0) || "U"}
+                                                    </span>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 )}
