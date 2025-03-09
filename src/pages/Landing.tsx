@@ -101,18 +101,18 @@ const Landing = () => {
                                         <span className="relative z-10 text-[#ec8e13]">Solutions</span>
                                         <div className="absolute -bottom-2 left-0 w-full h-3 bg-[#ec8e13]/20 rotate-1"></div>
                                     </span>
-                                </h1>
+                            </h1>
                                 
                                 <p className="text-xl text-[#99784D]">
                                     We're Troop Talk, an AI-powered assistant specializing in scouting information to help troops stand out and thrive in their scouting journey.
                                 </p>
                                 
                                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                                    <a href="#waitlist">
+                            <a href="#waitlist">
                                         <Button className="bg-[#ec8e13] text-white hover:bg-[#99784D] text-lg px-8 py-6 rounded-lg transition-all duration-300">
-                                            Join the Waitlist
-                                        </Button>
-                                    </a>
+                                    Join the Waitlist
+                                </Button>
+                            </a>
                                     <a href="#features">
                                         <Button variant="outline" className="border-[#99784D] text-[#99784D] hover:bg-[#99784D] hover:text-white text-lg px-8 py-6 rounded-lg transition-all duration-300">
                                             Check our features
@@ -129,12 +129,15 @@ const Landing = () => {
                                     <div className="absolute -top-3 -right-3 bg-[#ec8e13] text-white text-xs px-2 py-1 rounded-full">
                                         v1.0
                                     </div>
-                                    <iframe
+                                    <video
                                         className="w-full aspect-video rounded-lg shadow-md"
-                                        src="https://www.youtube.com/embed/4uWh950IFT4?autoplay=1&mute=1"
+                                        src="/troop-talk-demo.mp4"
                                         title="Troop Talk Demo"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
+                                        controls
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
                                     />
                                 </div>
                                 
@@ -217,27 +220,27 @@ const Landing = () => {
                             <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-[#ec8e13]/20 transform -translate-x-1/2 hidden md:block"></div>
                             
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-                                {[
-                                    {
-                                        step: 1,
-                                        title: "Emails",
-                                        description: "Connects directly to your Troop Emails and Communication"
-                                    },
-                                    {
-                                        step: 2,
-                                        title: "BSA Website",
-                                        description: "Uses information from the Official BSA Website to suit your needs"
-                                    },
-                                    {
-                                        step: 3,
-                                        title: "Custom Troop Info",
-                                        description: "Easily add Custom Troop Information to supercharge your Troop Talk experience"
-                                    }
-                                ].map((item) => (
-                                    <div key={item.step} className="transform hover:-translate-y-2 transition-transform duration-300">
+                            {[
+                                {
+                                    step: 1,
+                                    title: "Emails",
+                                    description: "Connects directly to your Troop Emails and Communication"
+                                },
+                                {
+                                    step: 2,
+                                    title: "BSA Website",
+                                    description: "Uses information from the Official BSA Website to suit your needs"
+                                },
+                                {
+                                    step: 3,
+                                    title: "Custom Troop Info",
+                                    description: "Easily add Custom Troop Information to supercharge your Troop Talk experience"
+                                }
+                            ].map((item) => (
+                                <div key={item.step} className="transform hover:-translate-y-2 transition-transform duration-300">
                                         <div className="bg-white p-6 rounded-lg shadow-md relative">
                                             <div className="w-12 h-12 bg-[#ec8e13] rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4 relative z-10">
-                                                {item.step}
+                                        {item.step}
                                             </div>
                                             <h3 className="text-xl font-semibold text-[#99784D] mb-2 text-center">{item.title}</h3>
                                             <p className="text-gray-600 text-center">{item.description}</p>
@@ -353,19 +356,19 @@ const Landing = () => {
                 <section id="waitlist" className="py-16 bg-[#f8f9fa] scroll-mt-20">
                     <div className="max-w-4xl mx-auto px-4">
                         <div className="bg-white p-8 rounded-xl shadow-lg">
-                            <h2 className="text-3xl font-bold text-center text-[#ec8e13] mb-8">Join the Waitlist</h2>
-                            <p className="text-center text-[#99784D] mb-8">Be among the first to experience Troop Talk when we launch.</p>
-                            <div className="max-w-2xl mx-auto transform hover:shadow-2xl transition-shadow duration-300">
-                                <iframe
-                                    id="JotFormIFrame-250161040091137"
-                                    title="Waitlist Form"
-                                    onLoad={() => window.scrollTo(0,0)}
-                                    allow="geolocation; microphone; camera; fullscreen"
-                                    src="https://form.jotform.com/250161040091137"
-                                    frameBorder="0"
-                                    style={{ minWidth: '100%', maxWidth: '100%', height: '539px', border: 'none' }}
-                                    scrolling="no"
-                                />
+                        <h2 className="text-3xl font-bold text-center text-[#ec8e13] mb-8">Join the Waitlist</h2>
+                        <p className="text-center text-[#99784D] mb-8">Be among the first to experience Troop Talk when we launch.</p>
+                        <div className="max-w-2xl mx-auto transform hover:shadow-2xl transition-shadow duration-300">
+                            <iframe
+                                id="JotFormIFrame-250161040091137"
+                                title="Waitlist Form"
+                                onLoad={() => window.scrollTo(0,0)}
+                                allow="geolocation; microphone; camera; fullscreen"
+                                src="https://form.jotform.com/250161040091137"
+                                frameBorder="0"
+                                style={{ minWidth: '100%', maxWidth: '100%', height: '539px', border: 'none' }}
+                                scrolling="no"
+                            />
                             </div>
                         </div>
                     </div>
@@ -393,11 +396,11 @@ const Landing = () => {
                     <div className="max-w-6xl mx-auto px-4">
                         <div className="flex flex-col md:flex-row justify-between items-center">
                             <div className="flex items-center mb-4 md:mb-0">
-                                <img
-                                    src="https://i.imgur.com/XDgqhzt.png"
-                                    alt="Troop Talk Logo"
+                            <img
+                                src="https://i.imgur.com/XDgqhzt.png"
+                                alt="Troop Talk Logo"
                                     className="h-10 w-auto hover:opacity-80 transition-opacity mr-4"
-                                />
+                            />
                                 <div>
                                     <p className="font-semibold text-gray-800">Troop Talk</p>
                                     <p className="text-sm text-gray-500">AI-Powered Scouting Assistant</p>
