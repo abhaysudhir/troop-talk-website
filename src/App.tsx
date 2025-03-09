@@ -17,7 +17,19 @@ export default function App() {
                     <Route path="/" element={<Landing />} />
                     
                     {/* Auth routes */}
-                    <Route path="/sign-in/*" element={<Login />} />
+                    <Route 
+                        path="/sign-in/*" 
+                        element={
+                            <>
+                                <SignedIn>
+                                    <Navigate to="/chat" replace />
+                                </SignedIn>
+                                <SignedOut>
+                                    <Login />
+                                </SignedOut>
+                            </>
+                        } 
+                    />
                     <Route path="/sign-up/*" element={<Navigate to="/sign-in" replace />} /> {/* element={<Signup />}} */}
                     <Route path="/pending-approval" element={<Navigate to="/" replace />} /> {/* element={<PendingApproval /> */}
 

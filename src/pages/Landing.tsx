@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
 
 const Landing = () => {
     const navigate = useNavigate();
+    const { isSignedIn } = useAuth();
 
     useEffect(() => {
         const script = document.createElement("script");
@@ -58,7 +60,7 @@ const Landing = () => {
                                 ))}
                             </div>
                             <Button
-                                onClick={() => navigate('/sign-in')}
+                                onClick={() => navigate(isSignedIn ? '/chat' : '/sign-in')}
                                 className="bg-[#ec8e13] text-white hover:bg-[#99784D] transition-colors ml-6"
                             >
                                 Sign In
