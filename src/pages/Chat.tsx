@@ -151,14 +151,14 @@ const Chat = () => {
                         {messages.map((message) => (
                             <div
                                 key={message.id}
-                                className={`flex ${
+                                className={`flex items-end ${
                                     message.sender === "user"
                                         ? "justify-end"
                                         : "justify-start"
                                 }`}
                             >
                                 {message.sender === "ai" && (
-                                    <div className="flex-shrink-0 mr-3">
+                                    <div className="flex-shrink-0 mr-3 mb-1">
                                         <div className="w-8 h-8 rounded-full bg-[#ec8e13]/10 flex items-center justify-center">
                                             <img
                                                 src="https://i.imgur.com/XDgqhzt.png"
@@ -171,8 +171,8 @@ const Chat = () => {
                                 <div
                                     className={`p-4 rounded-2xl max-w-[80%] ${
                                         message.sender === "user"
-                                            ? "bg-[#ec8e13] text-white"
-                                            : "bg-white border border-gray-200 shadow-sm"
+                                            ? "bg-[#ec8e13] text-white rounded-tr-none"
+                                            : "bg-white border border-gray-200 shadow-sm rounded-tl-none"
                                     }`}
                                 >
                                     {message.sender === "ai" ? (
@@ -205,7 +205,7 @@ const Chat = () => {
                                     )}
                                 </div>
                                 {message.sender === "user" && (
-                                    <div className="flex-shrink-0 ml-3">
+                                    <div className="flex-shrink-0 ml-3 mb-1">
                                         <div className="w-8 h-8 rounded-full overflow-hidden">
                                             {user?.imageUrl ? (
                                                 <img 
