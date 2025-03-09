@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Send, Paperclip, Mic, Settings } from "lucide-react";
+import { Send } from "lucide-react";
 import TypingIndicator from "@/components/TypingIndicator";
 import { marked } from "marked"; // Import marked for Markdown conversion
 import { UserButton } from "@clerk/clerk-react";
@@ -102,9 +102,9 @@ const Chat = () => {
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
                 />
             </Helmet>
-            <div className="flex flex-col h-[100dvh] bg-[#1e2130] text-white">
+            <div className="flex flex-col h-[100dvh] bg-gray-50 text-gray-800">
                 {/* Header */}
-                <header className="bg-[#1e2130] border-b border-[#2a2e3f] p-4 flex-none">
+                <header className="bg-white border-b border-gray-200 p-4 flex-none shadow-sm">
                     <div className="max-w-4xl mx-auto flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                             <img
@@ -121,12 +121,7 @@ const Chat = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center space-x-2">
-                            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                                <Settings className="h-5 w-5" />
-                            </Button>
-                            <UserButton />
-                        </div>
+                        <UserButton />
                     </div>
                 </header>
 
@@ -135,7 +130,7 @@ const Chat = () => {
                     {/* Welcome Container - Only shown when no messages */}
                     {messages.length <= 1 && (
                         <div className="flex flex-col items-center justify-center max-w-md mx-auto my-12 text-center">
-                            <div className="bg-[#2a2e3f] rounded-full p-6 mb-6">
+                            <div className="bg-[#ec8e13]/10 rounded-full p-6 mb-6">
                                 <img
                                     src="https://i.imgur.com/XDgqhzt.png"
                                     alt="Troop Talk Logo"
@@ -144,7 +139,7 @@ const Chat = () => {
                             </div>
                             <h2 className="text-2xl font-bold mb-2">Hi, Scout</h2>
                             <p className="text-xl mb-8">Can I help you with anything?</p>
-                            <p className="text-gray-400 text-sm max-w-xs">
+                            <p className="text-gray-500 text-sm max-w-xs">
                                 Ready to assist you with anything you need. From answering questions about scouting to providing recommendations. Let's get started!
                             </p>
                         </div>
@@ -163,7 +158,7 @@ const Chat = () => {
                             >
                                 {message.sender === "ai" && (
                                     <div className="flex-shrink-0 mr-3">
-                                        <div className="w-8 h-8 rounded-full bg-[#2a2e3f] flex items-center justify-center">
+                                        <div className="w-8 h-8 rounded-full bg-[#ec8e13]/10 flex items-center justify-center">
                                             <img
                                                 src="https://i.imgur.com/XDgqhzt.png"
                                                 alt="Troop Talk"
@@ -176,7 +171,7 @@ const Chat = () => {
                                     className={`p-4 rounded-2xl max-w-[80%] ${
                                         message.sender === "user"
                                             ? "bg-[#ec8e13] text-white"
-                                            : "bg-[#2a2e3f] text-white"
+                                            : "bg-white border border-gray-200 shadow-sm"
                                     }`}
                                 >
                                     {message.sender === "ai" ? (
@@ -190,15 +185,15 @@ const Chat = () => {
                                                 )
                                                     .replace(
                                                         /<table>/g,
-                                                        `<table class="table-auto border-collapse w-full text-xs sm:text-sm text-left text-gray-300 border border-gray-700 my-2 sm:my-4">`
+                                                        `<table class="table-auto border-collapse w-full text-xs sm:text-sm text-left text-gray-700 border border-gray-300 my-2 sm:my-4">`
                                                     )
                                                     .replace(
                                                         /<th>/g,
-                                                        `<th class="border border-gray-700 p-1 sm:p-2 bg-[#ec8e13] text-white">`
+                                                        `<th class="border border-gray-300 p-1 sm:p-2 bg-[#ec8e13] text-white">`
                                                     )
                                                     .replace(
                                                         /<td>/g,
-                                                        `<td class="border border-gray-700 p-1 sm:p-2">`
+                                                        `<td class="border border-gray-300 p-1 sm:p-2">`
                                                     ),
                                             }}
                                         />
@@ -223,43 +218,25 @@ const Chat = () => {
                 </main>
 
                 {/* Footer Input Area */}
-                <footer className="bg-[#1e2130] border-t border-[#2a2e3f] p-4 flex-none">
+                <footer className="bg-white border-t border-gray-200 p-4 flex-none">
                     <div className="max-w-3xl mx-auto">
                         <form
                             onSubmit={handleSend}
-                            className="flex items-center space-x-2 bg-[#2a2e3f] rounded-full p-2 pl-4"
+                            className="flex items-center space-x-2 bg-gray-100 rounded-full p-2 pl-4"
                         >
                             <Input
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Ask me anything..."
-                                className="flex-1 border-none bg-transparent text-white placeholder-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
+                                className="flex-1 border-none bg-transparent text-gray-800 placeholder-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0"
                             />
-                            <div className="flex items-center space-x-1">
-                                <Button
-                                    type="button"
-                                    variant="ghost"
-                                    size="icon"
-                                    className="text-gray-400 hover:text-white"
-                                >
-                                    <Paperclip className="h-5 w-5" />
-                                </Button>
-                                <Button
-                                    type="button"
-                                    variant="ghost"
-                                    size="icon"
-                                    className="text-gray-400 hover:text-white"
-                                >
-                                    <Mic className="h-5 w-5" />
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    size="icon"
-                                    className="bg-[#ec8e13] hover:bg-[#99784D] rounded-full h-9 w-9 flex items-center justify-center"
-                                >
-                                    <Send className="h-4 w-4" />
-                                </Button>
-                            </div>
+                            <Button
+                                type="submit"
+                                size="icon"
+                                className="bg-[#ec8e13] hover:bg-[#99784D] rounded-full h-9 w-9 flex items-center justify-center"
+                            >
+                                <Send className="h-4 w-4" />
+                            </Button>
                         </form>
                         <div className="text-center mt-2 text-xs text-gray-500">
                             Troop Talk may contain errors. We recommend checking important information.
