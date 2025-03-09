@@ -133,11 +133,12 @@ const Landing = () => {
                                         className="w-full aspect-video rounded-lg shadow-md"
                                         src="/troop-talk-demo.mp4"
                                         title="Troop Talk Demo"
-                                        controls
                                         autoPlay
                                         muted
                                         loop
                                         playsInline
+                                        disablePictureInPicture
+                                        disableRemotePlayback
                                     />
                                 </div>
                                 
