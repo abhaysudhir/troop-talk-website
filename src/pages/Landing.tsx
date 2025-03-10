@@ -38,16 +38,16 @@ const Landing = () => {
             </Helmet>
             <div className="min-h-screen bg-[#f8f9fa]">
                 {/* Navbar */}
-                <nav className="bg-white border-b p-4 shadow-sm sticky top-0 z-50">
+                <nav className="bg-white border-b p-3 sm:p-4 shadow-sm sticky top-0 z-50">
                     <div className="max-w-6xl mx-auto flex justify-between items-center">
                         <div className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
                             <img
                                 src="https://i.imgur.com/XDgqhzt.png"
                                 alt="Troop Talk Logo"
-                                className="h-16 w-auto"
+                                className="h-10 sm:h-16 w-auto"
                             />
                         </div>
-                        <div className="flex items-center space-x-6">
+                        <div className="flex items-center">
                             <div className="text-[#99784D] space-x-6 hidden md:flex">
                                 {["features", "information-sources", "benefits", "waitlist"].map((section) => (
                                     <a
@@ -61,7 +61,7 @@ const Landing = () => {
                             </div>
                             <Button
                                 onClick={() => navigate(isSignedIn ? '/chat' : '/sign-in')}
-                                className="bg-[#ec8e13] text-white hover:bg-[#99784D] transition-colors ml-6"
+                                className="bg-[#ec8e13] text-white hover:bg-[#99784D] transition-colors ml-4 sm:ml-6 text-sm sm:text-base px-3 py-1 sm:px-4 sm:py-2"
                             >
                                 Sign In
                             </Button>
@@ -70,71 +70,71 @@ const Landing = () => {
                 </nav>
 
                 {/* Hero Section - Redesigned */}
-                <section className="py-16 bg-[#f8f9fa]">
+                <section className="py-8 sm:py-16 bg-[#f8f9fa]">
                     <div className="max-w-6xl mx-auto px-4">
-                        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                            <div className="md:w-1/2 space-y-6">
-                                <div className="flex items-center">
-                                    <div className="bg-[#ec8e13]/10 px-4 py-1 rounded-full">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-8 sm:gap-12">
+                            <div className="md:w-1/2 space-y-4 sm:space-y-6">
+                                <div className="flex flex-wrap items-center">
+                                    <div className="bg-[#ec8e13]/10 px-3 py-1 rounded-full mb-2 sm:mb-0">
                                         <div className="flex items-center">
                                             <div className="w-2 h-2 bg-[#ec8e13] rounded-full mr-2"></div>
-                                            <span className="text-sm font-medium text-[#ec8e13]">REVIEWED ON</span>
+                                            <span className="text-xs sm:text-sm font-medium text-[#ec8e13]">REVIEWED ON</span>
                                         </div>
                                     </div>
-                                    <div className="ml-3 flex items-center">
-                                        <span className="font-bold text-gray-700 mr-2">Scout Leaders</span>
+                                    <div className="ml-0 sm:ml-3 flex items-center mt-2 sm:mt-0">
+                                        <span className="font-bold text-gray-700 mr-2 text-sm sm:text-base">Scout Leaders</span>
                                         <div className="flex">
                                             {[1, 2, 3, 4, 5].map((star) => (
-                                                <svg key={star} className="w-4 h-4 text-[#ec8e13]" fill="currentColor" viewBox="0 0 20 20">
+                                                <svg key={star} className="w-3 h-3 sm:w-4 sm:h-4 text-[#ec8e13]" fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                                 </svg>
                                             ))}
                                         </div>
-                                        <span className="ml-2 text-sm text-gray-500">500+ REVIEWS</span>
+                                        <span className="ml-2 text-xs sm:text-sm text-gray-500">500+ REVIEWS</span>
                                     </div>
                                 </div>
                                 
-                                <h1 className="text-5xl font-bold text-gray-800 leading-tight">
+                                <h1 className="text-3xl sm:text-5xl font-bold text-gray-800 leading-tight">
                                     Unleash <span className="relative inline-block">
                                         <span className="relative z-10 text-[#ec8e13]">Standout</span>
-                                        <div className="absolute -bottom-2 left-0 w-full h-3 bg-[#ec8e13]/20 -rotate-1"></div>
+                                        <div className="absolute -bottom-2 left-0 w-full h-2 sm:h-3 bg-[#ec8e13]/20 -rotate-1"></div>
                                     </span> 
                                     <br />Scouting <span className="relative inline-block">
                                         <span className="relative z-10 text-[#ec8e13]">Solutions</span>
-                                        <div className="absolute -bottom-2 left-0 w-full h-3 bg-[#ec8e13]/20 rotate-1"></div>
+                                        <div className="absolute -bottom-2 left-0 w-full h-2 sm:h-3 bg-[#ec8e13]/20 rotate-1"></div>
                                     </span>
-                            </h1>
+                                </h1>
                                 
-                                <p className="text-xl text-[#99784D]">
+                                <p className="text-base sm:text-xl text-[#99784D]">
                                     We're Troop Talk, an AI-powered assistant specializing in scouting information to help troops stand out and thrive in their scouting journey.
                                 </p>
                                 
-                                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                            <a href="#waitlist">
-                                        <Button className="bg-[#ec8e13] text-white hover:bg-[#99784D] text-lg px-8 py-6 rounded-lg transition-all duration-300">
-                                    Join the Waitlist
-                                </Button>
-                            </a>
+                                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4">
+                                    <a href="#waitlist">
+                                        <Button className="bg-[#ec8e13] text-white hover:bg-[#99784D] text-sm sm:text-lg w-full sm:w-auto px-4 sm:px-8 py-3 sm:py-6 rounded-lg transition-all duration-300">
+                                            Join the Waitlist
+                                        </Button>
+                                    </a>
                                     <a href="#features">
-                                        <Button variant="outline" className="border-[#99784D] text-[#99784D] hover:bg-[#99784D] hover:text-white text-lg px-8 py-6 rounded-lg transition-all duration-300">
+                                        <Button variant="outline" className="border-[#99784D] text-[#99784D] hover:bg-[#99784D] hover:text-white text-sm sm:text-lg w-full sm:w-auto px-4 sm:px-8 py-3 sm:py-6 rounded-lg transition-all duration-300">
                                             Check our features
                                         </Button>
                                     </a>
                                 </div>
                             </div>
                             
-                            <div className="md:w-1/2 relative">
-                                <div className="absolute -top-6 -left-6 w-24 h-24 bg-[#ec8e13]/10 rounded-full blur-xl"></div>
-                                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#99784D]/10 rounded-full blur-xl"></div>
+                            <div className="md:w-1/2 relative mt-8 md:mt-0">
+                                <div className="absolute -top-6 -left-6 w-16 sm:w-24 h-16 sm:h-24 bg-[#ec8e13]/10 rounded-full blur-xl"></div>
+                                <div className="absolute -bottom-6 -right-6 w-20 sm:w-32 h-20 sm:h-32 bg-[#99784D]/10 rounded-full blur-xl"></div>
                                 
-                                <div className="relative bg-white p-4 rounded-xl shadow-lg">
+                                <div className="relative bg-white p-3 sm:p-4 rounded-xl shadow-lg">
                                     <div className="absolute -top-3 -right-3 bg-[#ec8e13] text-white text-xs px-2 py-1 rounded-full">
                                         v1.0
-                        </div>
+                                    </div>
                                     <video
-                                className="w-full aspect-video rounded-lg shadow-md"
+                                        className="w-full aspect-video rounded-lg shadow-md"
                                         src="/troop-talk-demo.mp4"
-                                title="Troop Talk Demo"
+                                        title="Troop Talk Demo"
                                         autoPlay
                                         muted
                                         loop
@@ -144,7 +144,7 @@ const Landing = () => {
                                     />
                                 </div>
                                 
-                                <div className="absolute top-1/2 right-0 transform translate-x-1/4 -translate-y-1/2">
+                                <div className="absolute top-1/2 right-0 transform translate-x-1/4 -translate-y-1/2 hidden sm:block">
                                     <div className="bg-white p-3 rounded-lg shadow-lg">
                                         <div className="flex items-center">
                                             <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>

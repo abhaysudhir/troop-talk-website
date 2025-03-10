@@ -105,19 +105,19 @@ const Chat = () => {
             </Helmet>
             <div className="flex flex-col h-[100dvh] bg-gray-50 text-gray-800">
                 {/* Header */}
-                <header className="bg-white border-b border-gray-200 p-4 flex-none shadow-sm">
+                <header className="bg-white border-b border-gray-200 p-3 sm:p-4 flex-none shadow-sm">
                     <div className="max-w-4xl mx-auto flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2 sm:space-x-4">
                             <img
                                 src="https://i.imgur.com/XDgqhzt.png"
                                 alt="Troop Talk Logo"
-                                className="h-10 w-auto"
+                                className="h-8 sm:h-10 w-auto"
                             />
                             <div>
-                                <h1 className="text-xl font-bold text-[#ec8e13]">
+                                <h1 className="text-lg sm:text-xl font-bold text-[#ec8e13]">
                                     Troop Talk
                                 </h1>
-                                <p className="text-sm text-[#99784D]">
+                                <p className="text-xs sm:text-sm text-[#99784D]">
                                     AI Scouting Assistant
                                 </p>
                             </div>
@@ -127,27 +127,27 @@ const Chat = () => {
                 </header>
 
                 {/* Main Chat Area */}
-                <main className="flex-1 overflow-y-auto p-4 flex flex-col items-center">
+                <main className="flex-1 overflow-y-auto p-3 sm:p-4 flex flex-col items-center">
                     {/* Welcome Container - Only shown when no messages */}
                     {messages.length <= 1 && (
-                        <div className="flex flex-col items-center justify-center max-w-md mx-auto my-12 text-center">
-                            <div className="bg-[#ec8e13]/10 rounded-full p-6 mb-6">
+                        <div className="flex flex-col items-center justify-center max-w-md mx-auto my-6 sm:my-12 text-center px-4">
+                            <div className="bg-[#ec8e13]/10 rounded-full p-4 sm:p-6 mb-4 sm:mb-6">
                                 <img
                                     src="https://i.imgur.com/XDgqhzt.png"
                                     alt="Troop Talk Logo"
-                                    className="h-16 w-auto"
+                                    className="h-12 sm:h-16 w-auto"
                                 />
                             </div>
-                            <h2 className="text-2xl font-bold mb-2">Hi, {user?.firstName || 'Scout'}</h2>
-                            <p className="text-xl mb-8">Can I help you with anything?</p>
-                            <p className="text-gray-500 text-sm max-w-xs">
+                            <h2 className="text-xl sm:text-2xl font-bold mb-2">Hi, {user?.firstName || 'Scout'}</h2>
+                            <p className="text-lg sm:text-xl mb-4 sm:mb-8">Can I help you with anything?</p>
+                            <p className="text-gray-500 text-xs sm:text-sm max-w-xs">
                                 Ready to assist you with anything you need. From answering questions about scouting to providing recommendations. Let's get started!
                             </p>
                         </div>
                     )}
 
                     {/* Messages */}
-                    <div className="w-full max-w-3xl space-y-6 pb-4">
+                    <div className="w-full max-w-3xl space-y-4 sm:space-y-6 pb-4">
                         {messages.map((message) => (
                             <div
                                 key={message.id}
@@ -158,18 +158,18 @@ const Chat = () => {
                                 }`}
                             >
                                 {message.sender === "ai" && (
-                                    <div className="flex-shrink-0 mr-3 mb-1">
-                                        <div className="w-8 h-8 rounded-full bg-[#ec8e13]/10 flex items-center justify-center">
+                                    <div className="flex-shrink-0 mr-2 sm:mr-3 mb-1">
+                                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#ec8e13]/10 flex items-center justify-center">
                                             <img
                                                 src="https://i.imgur.com/XDgqhzt.png"
                                                 alt="Troop Talk"
-                                                className="h-6 w-6"
+                                                className="h-4 w-4 sm:h-6 sm:w-6"
                                             />
                                         </div>
                                     </div>
                                 )}
                                 <div
-                                    className={`p-4 rounded-2xl max-w-[80%] ${
+                                    className={`p-3 sm:p-4 rounded-2xl max-w-[85%] sm:max-w-[80%] ${
                                         message.sender === "user"
                                             ? "bg-[#ec8e13] text-white rounded-tr-none"
                                             : "bg-white border border-gray-200 shadow-sm rounded-tl-none"
@@ -177,7 +177,7 @@ const Chat = () => {
                                 >
                                     {message.sender === "ai" ? (
                                         <div
-                                            className="text-sm"
+                                            className="text-xs sm:text-sm"
                                             dangerouslySetInnerHTML={{
                                                 __html: String(
                                                     marked.parse(
@@ -186,27 +186,27 @@ const Chat = () => {
                                                 )
                                                     .replace(
                                                         /<table>/g,
-                                                        `<table class="table-auto border-collapse w-full text-xs sm:text-sm text-left text-gray-700 border border-gray-300 my-2 sm:my-4">`
+                                                        `<table class="table-auto border-collapse w-full text-xs text-left text-gray-700 border border-gray-300 my-2">`
                                                     )
                                                     .replace(
                                                         /<th>/g,
-                                                        `<th class="border border-gray-300 p-1 sm:p-2 bg-[#ec8e13] text-white">`
+                                                        `<th class="border border-gray-300 p-1 sm:p-2 bg-[#ec8e13] text-white text-xs">`
                                                     )
                                                     .replace(
                                                         /<td>/g,
-                                                        `<td class="border border-gray-300 p-1 sm:p-2">`
+                                                        `<td class="border border-gray-300 p-1 sm:p-2 text-xs">`
                                                     ),
                                             }}
                                         />
                                     ) : (
-                                        <p className="text-sm">
+                                        <p className="text-xs sm:text-sm">
                                             {message.content}
                                         </p>
                                     )}
                                 </div>
                                 {message.sender === "user" && (
-                                    <div className="flex-shrink-0 ml-3 mb-1">
-                                        <div className="w-8 h-8 rounded-full overflow-hidden">
+                                    <div className="flex-shrink-0 ml-2 sm:ml-3 mb-1">
+                                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full overflow-hidden">
                                             {user?.imageUrl ? (
                                                 <img 
                                                     src={user.imageUrl} 
@@ -231,22 +231,22 @@ const Chat = () => {
                 </main>
 
                 {/* Footer Input Area */}
-                <footer className="bg-white border-t border-gray-200 p-4 flex-none">
+                <footer className="bg-white border-t border-gray-200 p-3 sm:p-4 flex-none">
                     <div className="max-w-3xl mx-auto">
                         <form
                             onSubmit={handleSend}
-                            className="flex items-center space-x-2 bg-gray-100 rounded-full p-2 pl-4"
+                            className="flex items-center space-x-2 bg-gray-100 rounded-full p-1 sm:p-2 pl-3 sm:pl-4"
                         >
                             <Input
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Ask me anything..."
-                                className="flex-1 border-none bg-transparent text-gray-800 placeholder-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0"
+                                className="flex-1 border-none bg-transparent text-gray-800 placeholder-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 text-sm sm:text-base"
                             />
                             <Button
                                 type="submit"
                                 size="icon"
-                                className="bg-[#ec8e13] hover:bg-[#99784D] rounded-full h-9 w-9 flex items-center justify-center"
+                                className="bg-[#ec8e13] hover:bg-[#99784D] rounded-full h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center flex-shrink-0"
                             >
                                 <Send className="h-4 w-4" />
                             </Button>
