@@ -7,6 +7,7 @@ import TypingIndicator from "@/components/TypingIndicator";
 import { marked } from "marked"; // Import marked for Markdown conversion
 import { UserButton, useUser } from "@clerk/clerk-react";
 import { Helmet } from "react-helmet-async";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Message {
     id: number;
@@ -14,12 +15,21 @@ interface Message {
     sender: "user" | "ai";
 }
 
+interface CacheInfo {
+    cacheId: string;
+    createdAt: number;
+    expiresAt: number;
+    messages: Message[];
+}
+
 const Chat = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
     const [isAiTyping, setIsAiTyping] = useState(false);
+    const [contextCache, setContextCache] = useState<CacheInfo | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { user } = useUser();
+    const navigate = useNavigate();
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -107,7 +117,10 @@ const Chat = () => {
                 {/* Header */}
                 <header className="bg-white border-b border-gray-200 p-3 sm:p-4 flex-none shadow-sm">
                     <div className="max-w-4xl mx-auto flex items-center justify-between">
-                        <div className="flex items-center space-x-2 sm:space-x-4">
+                        <div 
+                            className="flex items-center space-x-2 sm:space-x-4 cursor-pointer hover:opacity-80 transition-opacity"
+                            onClick={() => navigate('/')}
+                        >
                             <img
                                 src="https://i.imgur.com/XDgqhzt.png"
                                 alt="Troop Talk Logo"
