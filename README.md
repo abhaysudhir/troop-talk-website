@@ -57,3 +57,5 @@ v2 Feature List
 - Clear Chat
 - Context?
 - Generate Graphs?
+
+Create LinkedIn Post
