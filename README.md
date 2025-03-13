@@ -54,6 +54,6 @@ Upcoming Edits/Features:
 
 v2 Feature List
 - Revamped UI
-- Clear Chat
+- Clear Chatw
 - Context?
 - Generate Graphs?
