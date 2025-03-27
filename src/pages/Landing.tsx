@@ -355,23 +355,10 @@ const Landing = () => {
                 </section>
 
                 {/* Footer */}
-                <footer className="bg-white py-8">
-                    <div className="max-w-6xl mx-auto px-4">
-                        <div className="flex flex-col md:flex-row justify-between items-center">
-                            <div className="flex items-center mb-4 md:mb-0">
-                            <img
-                                src="https://i.imgur.com/XDgqhzt.png"
-                                alt="Troop Talk Logo"
-                                    className="h-10 w-auto hover:opacity-80 transition-opacity mr-4"
-                            />
-                                <div>
-                                    <p className="font-semibold text-gray-800">Troop Talk</p>
-                                    <p className="text-sm text-gray-500">AI-Powered Scouting Assistant</p>
-                                </div>
-                            </div>
-                            <div className="text-sm text-gray-600">
-                                © 2024 Troop Talk. All rights reserved.
-                            </div>
+                <footer className="bg-gray-50 py-8">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center text-gray-600">
+                            <p>Contact us at: <a href="mailto:abhay.sudhir08@gmail.com" className="text-[#ec8e13] hover:text-[#99784D] underline">abhay.sudhir08@gmail.com</a></p>
                         </div>
                     </div>
                 </footer>
