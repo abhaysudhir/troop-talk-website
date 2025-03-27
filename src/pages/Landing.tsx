@@ -357,8 +357,15 @@ const Landing = () => {
                 {/* Footer */}
                 <footer className="bg-gray-50 py-8">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center text-gray-600">
-                            <p>Contact us at: <a href="mailto:abhay.sudhir08@gmail.com" className="text-[#ec8e13] hover:text-[#99784D] underline">abhay.sudhir08@gmail.com</a></p>
+                        <div className="flex items-center justify-between">
+                            <img
+                                src="https://i.imgur.com/XDgqhzt.png"
+                                alt="Troop Talk Logo"
+                                className="h-10 w-auto"
+                            />
+                            <div className="text-gray-600">
+                                <p>Contact us at: <a href="mailto:abhay.sudhir08@gmail.com" className="text-[#ec8e13] hover:text-[#99784D] underline">abhay.sudhir08@gmail.com</a></p>
+                            </div>
                         </div>
                     </div>
                 </footer>
