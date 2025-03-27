@@ -123,26 +123,6 @@ const Landing = () => {
                                         disableRemotePlayback
                                     />
                                 </div>
-                                
-                                <div className="absolute top-1/2 right-0 transform translate-x-1/4 -translate-y-1/2 hidden sm:block">
-                                    <div className="bg-white p-3 rounded-lg shadow-lg">
-                                        <div className="flex items-center">
-                                            <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                                            <span className="text-xs font-medium">Scouting Growth</span>
-                                        </div>
-                                        <div className="mt-1 w-32 h-16">
-                                            <div className="h-full flex items-end space-x-1">
-                                                {[20, 35, 25, 45, 30, 60, 70].map((height, i) => (
-                                                    <div 
-                                                        key={i} 
-                                                        className="w-3 bg-gradient-to-t from-[#ec8e13] to-[#ec8e13]/70 rounded-t"
-                                                        style={{ height: `${height}%` }}
-                                                    ></div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
