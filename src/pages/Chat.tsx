@@ -68,7 +68,7 @@ const Chat = () => {
 
         try {
             const response = await fetch(
-                `https://tt-backend-scripts-bigvm.ondigitalocean.app/ask?question=${encodeURIComponent(
+                `${import.meta.env.VITE_DO_BACKEND_URL}/ask?question=${encodeURIComponent(
                     input
                 )}`,
                 {
