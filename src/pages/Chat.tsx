@@ -446,7 +446,7 @@ const Chat = () => {
                                             }}
                                         />
                                     ) : (
-                                        <p className="text-xs sm:text-sm">
+                                        <p className="text-xs sm:text-sm whitespace-pre-wrap">
                                             {message.content}
                                         </p>
                                     )}
