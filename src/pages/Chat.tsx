@@ -101,23 +101,76 @@ const Chat = () => {
 
             let streamedContent = "";
             const decoder = new TextDecoder();
-
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-                
-                // Decode the chunk and append to streamed content
-                const chunk = decoder.decode(value, { stream: true });
-                streamedContent += chunk;
-                
-                // Update the message with the current streamed content
-                setMessages((prev) => 
-                    prev.map((msg) => 
-                        msg.id === aiMessageId 
-                            ? { ...msg, content: streamedContent } 
-                            : msg
-                    )
-                );
+            
+            // Use this to batch updates for better performance
+            let lastUpdateTime = Date.now();
+            const UPDATE_INTERVAL = 50; // Update at most every 50ms
+            
+            // Add timeout handling
+            let lastReceivedTime = Date.now();
+            const MAX_WAIT_TIME = 5000; // 5 seconds max wait time between chunks
+            let isStreamingPaused = false;
+            
+            // Start a timer to check for stalled streaming
+            const timeoutChecker = setInterval(() => {
+                const now = Date.now();
+                // If no data received for MAX_WAIT_TIME, show typing indicator
+                if (now - lastReceivedTime > MAX_WAIT_TIME && !isStreamingPaused) {
+                    isStreamingPaused = true;
+                    setIsAiTyping(true);
+                }
+            }, 1000); // Check every second
+            
+            const streamReader = async () => {
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) {
+                        // Final update to ensure we have the complete message
+                        setMessages((prev) => 
+                            prev.map((msg) => 
+                                msg.id === aiMessageId 
+                                    ? { ...msg, content: streamedContent } 
+                                    : msg
+                            )
+                        );
+                        break;
+                    }
+                    
+                    // Reset last received time since we got data
+                    lastReceivedTime = Date.now();
+                    
+                    // If we were showing the typing indicator, hide it now that we're receiving data again
+                    if (isStreamingPaused) {
+                        isStreamingPaused = false;
+                        setIsAiTyping(false);
+                    }
+                    
+                    // Decode the chunk and append to streamed content
+                    const chunk = decoder.decode(value, { stream: true });
+                    streamedContent += chunk;
+                    
+                    // Only update the UI periodically to avoid too many re-renders
+                    const now = Date.now();
+                    if (now - lastUpdateTime > UPDATE_INTERVAL) {
+                        setMessages((prev) => 
+                            prev.map((msg) => 
+                                msg.id === aiMessageId 
+                                    ? { ...msg, content: streamedContent } 
+                                    : msg
+                            )
+                        );
+                        lastUpdateTime = now;
+                    }
+                }
+            };
+            
+            try {
+                await streamReader();
+            } finally {
+                clearInterval(timeoutChecker);
+                // Ensure typing indicator is turned off when streaming ends
+                setIsAiTyping(false);
             }
         } catch (error) {
             console.error("Error fetching AI response:", error);
@@ -130,8 +183,6 @@ const Chat = () => {
                         : msg
                 )
             );
-        } finally {
-            setIsAiTyping(false);
         }
     };
 
