@@ -73,7 +73,10 @@ const Chat = () => {
             content: "",
             sender: "ai",
         };
-        setMessages((prev) => [...prev, aiMessage]);
+        
+        // Only add the AI message once we start getting content
+        // This prevents empty bubbles from showing up
+        let hasAddedAiMessage = false;
 
         try {
             const response = await fetch(
@@ -96,8 +99,8 @@ const Chat = () => {
                 throw new Error("Response body is not readable");
             }
 
-            // Remove typing indicator as we're now streaming actual content
-            setIsAiTyping(false);
+            // Keep typing indicator until we receive content
+            // setIsAiTyping(false);
 
             let streamedContent = "";
             const decoder = new TextDecoder();
@@ -127,40 +130,52 @@ const Chat = () => {
                     
                     if (done) {
                         // Final update to ensure we have the complete message
-                        setMessages((prev) => 
-                            prev.map((msg) => 
-                                msg.id === aiMessageId 
-                                    ? { ...msg, content: streamedContent } 
-                                    : msg
-                            )
-                        );
+                        if (streamedContent.trim()) {
+                            setMessages((prev) => 
+                                prev.map((msg) => 
+                                    msg.id === aiMessageId 
+                                        ? { ...msg, content: streamedContent } 
+                                        : msg
+                                )
+                            );
+                        }
                         break;
                     }
                     
                     // Reset last received time since we got data
                     lastReceivedTime = Date.now();
                     
-                    // If we were showing the typing indicator, hide it now that we're receiving data again
-                    if (isStreamingPaused) {
-                        isStreamingPaused = false;
-                        setIsAiTyping(false);
-                    }
-                    
                     // Decode the chunk and append to streamed content
                     const chunk = decoder.decode(value, { stream: true });
-                    streamedContent += chunk;
                     
-                    // Only update the UI periodically to avoid too many re-renders
-                    const now = Date.now();
-                    if (now - lastUpdateTime > UPDATE_INTERVAL) {
-                        setMessages((prev) => 
-                            prev.map((msg) => 
-                                msg.id === aiMessageId 
-                                    ? { ...msg, content: streamedContent } 
-                                    : msg
-                            )
-                        );
-                        lastUpdateTime = now;
+                    if (chunk.trim()) {
+                        // If this is the first meaningful content, add the AI message and hide typing indicator
+                        if (!hasAddedAiMessage) {
+                            hasAddedAiMessage = true;
+                            setMessages((prev) => [...prev, aiMessage]);
+                            setIsAiTyping(false);
+                        }
+                        
+                        // If we were showing the typing indicator, hide it now that we're receiving data again
+                        if (isStreamingPaused) {
+                            isStreamingPaused = false;
+                            setIsAiTyping(false);
+                        }
+                        
+                        streamedContent += chunk;
+                        
+                        // Only update the UI periodically to avoid too many re-renders
+                        const now = Date.now();
+                        if (now - lastUpdateTime > UPDATE_INTERVAL) {
+                            setMessages((prev) => 
+                                prev.map((msg) => 
+                                    msg.id === aiMessageId 
+                                        ? { ...msg, content: streamedContent } 
+                                        : msg
+                                )
+                            );
+                            lastUpdateTime = now;
+                        }
                     }
                 }
             };
@@ -171,17 +186,34 @@ const Chat = () => {
                 clearInterval(timeoutChecker);
                 // Ensure typing indicator is turned off when streaming ends
                 setIsAiTyping(false);
+                
+                // If we never got any content, at least show an error message
+                if (!hasAddedAiMessage) {
+                    const errorMessage: Message = {
+                        id: aiMessageId,
+                        content: "Sorry, I couldn't generate a response. Please try again.",
+                        sender: "ai",
+                    };
+                    setMessages((prev) => [...prev, errorMessage]);
+                }
             }
         } catch (error) {
             console.error("Error fetching AI response:", error);
 
-            // Update the streaming message with error text if it exists
+            // Add an error message if we haven't added the AI message yet
+            const errorMessage: Message = {
+                id: aiMessageId,
+                content: "Error: Unable to fetch response from the server.",
+                sender: "ai",
+            };
             setMessages((prev) => 
-                prev.map((msg) => 
-                    msg.id === aiMessageId 
-                        ? { ...msg, content: "Error: Unable to fetch response from the server." } 
-                        : msg
-                )
+                hasAddedAiMessage 
+                    ? prev.map((msg) => 
+                        msg.id === aiMessageId 
+                            ? { ...msg, content: errorMessage.content } 
+                            : msg
+                      )
+                    : [...prev, errorMessage]
             );
         }
     };
