@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Send } from "lucide-react";
 import TypingIndicator from "@/components/TypingIndicator";
@@ -218,6 +219,15 @@ const Chat = () => {
         }
     };
 
+    // Handle key press events in the textarea
+    const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        // Submit on Ctrl+Enter or Cmd+Enter (Mac)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            handleSend(e as unknown as React.FormEvent);
+        }
+    };
+
     return (
         <>
             <Helmet>
@@ -364,11 +374,16 @@ const Chat = () => {
                             onSubmit={handleSend}
                             className="flex items-center space-x-2 bg-gray-100 rounded-full p-1 sm:p-2 pl-3 sm:pl-4"
                         >
-                            <Input
+                            <Textarea
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={handleKeyDown}
                                 placeholder="Ask me anything..."
-                                className="flex-1 border-none bg-transparent text-gray-800 placeholder-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 text-sm sm:text-base"
+                                className="flex-1 border-none bg-transparent text-gray-800 placeholder-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 text-sm sm:text-base resize-none min-h-[40px] max-h-[120px] py-2"
+                                style={{ 
+                                    overflow: 'auto',
+                                    lineHeight: '1.2rem'
+                                }}
                             />
                             <Button
                                 type="submit"
