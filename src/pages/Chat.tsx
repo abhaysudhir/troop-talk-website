@@ -66,6 +66,15 @@ const Chat = () => {
         setInput("");
         setIsAiTyping(true);
 
+        // Create a placeholder message for the streaming response
+        const aiMessageId = Date.now() + 1;
+        const aiMessage: Message = {
+            id: aiMessageId,
+            content: "",
+            sender: "ai",
+        };
+        setMessages((prev) => [...prev, aiMessage]);
+
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_DO_BACKEND_URL}/ask?question=${encodeURIComponent(
@@ -81,24 +90,46 @@ const Chat = () => {
                 throw new Error("Failed to fetch AI response");
             }
 
-            const responseData = await response.json();
-            const aiResponse: Message = {
-                id: Date.now() + 1,
-                content: responseData.answer || "No answer provided.",
-                sender: "ai",
-            };
+            // Process the streaming response
+            const reader = response.body?.getReader();
+            if (!reader) {
+                throw new Error("Response body is not readable");
+            }
 
-            setMessages((prev) => [...prev, aiResponse]);
+            // Remove typing indicator as we're now streaming actual content
+            setIsAiTyping(false);
+
+            let streamedContent = "";
+            const decoder = new TextDecoder();
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                
+                // Decode the chunk and append to streamed content
+                const chunk = decoder.decode(value, { stream: true });
+                streamedContent += chunk;
+                
+                // Update the message with the current streamed content
+                setMessages((prev) => 
+                    prev.map((msg) => 
+                        msg.id === aiMessageId 
+                            ? { ...msg, content: streamedContent } 
+                            : msg
+                    )
+                );
+            }
         } catch (error) {
             console.error("Error fetching AI response:", error);
 
-            const errorResponse: Message = {
-                id: Date.now() + 2,
-                content: "Error: Unable to fetch response from the server.",
-                sender: "ai",
-            };
-
-            setMessages((prev) => [...prev, errorResponse]);
+            // Update the streaming message with error text if it exists
+            setMessages((prev) => 
+                prev.map((msg) => 
+                    msg.id === aiMessageId 
+                        ? { ...msg, content: "Error: Unable to fetch response from the server." } 
+                        : msg
+                )
+            );
         } finally {
             setIsAiTyping(false);
         }
