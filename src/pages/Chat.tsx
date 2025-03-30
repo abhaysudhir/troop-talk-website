@@ -66,6 +66,18 @@ const Chat = () => {
         setInput("");
         setIsAiTyping(true);
 
+        // Create a placeholder message for the streaming response
+        const aiMessageId = Date.now() + 1;
+        const aiMessage: Message = {
+            id: aiMessageId,
+            content: "",
+            sender: "ai",
+        };
+        
+        // Only add the AI message once we start getting content
+        // This prevents empty bubbles from showing up
+        let hasAddedAiMessage = false;
+
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_DO_BACKEND_URL}/ask?question=${encodeURIComponent(
@@ -81,26 +93,128 @@ const Chat = () => {
                 throw new Error("Failed to fetch AI response");
             }
 
-            const responseData = await response.json();
-            const aiResponse: Message = {
-                id: Date.now() + 1,
-                content: responseData.answer || "No answer provided.",
-                sender: "ai",
-            };
+            // Process the streaming response
+            const reader = response.body?.getReader();
+            if (!reader) {
+                throw new Error("Response body is not readable");
+            }
 
-            setMessages((prev) => [...prev, aiResponse]);
+            // Keep typing indicator until we receive content
+            // setIsAiTyping(false);
+
+            let streamedContent = "";
+            const decoder = new TextDecoder();
+            
+            // Use this to batch updates for better performance
+            let lastUpdateTime = Date.now();
+            const UPDATE_INTERVAL = 50; // Update at most every 50ms
+            
+            // Add timeout handling
+            let lastReceivedTime = Date.now();
+            const MAX_WAIT_TIME = 5000; // 5 seconds max wait time between chunks
+            let isStreamingPaused = false;
+            
+            // Start a timer to check for stalled streaming
+            const timeoutChecker = setInterval(() => {
+                const now = Date.now();
+                // If no data received for MAX_WAIT_TIME, show typing indicator
+                if (now - lastReceivedTime > MAX_WAIT_TIME && !isStreamingPaused) {
+                    isStreamingPaused = true;
+                    setIsAiTyping(true);
+                }
+            }, 1000); // Check every second
+            
+            const streamReader = async () => {
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) {
+                        // Final update to ensure we have the complete message
+                        if (streamedContent.trim()) {
+                            setMessages((prev) => 
+                                prev.map((msg) => 
+                                    msg.id === aiMessageId 
+                                        ? { ...msg, content: streamedContent } 
+                                        : msg
+                                )
+                            );
+                        }
+                        break;
+                    }
+                    
+                    // Reset last received time since we got data
+                    lastReceivedTime = Date.now();
+                    
+                    // Decode the chunk and append to streamed content
+                    const chunk = decoder.decode(value, { stream: true });
+                    
+                    if (chunk.trim()) {
+                        // If this is the first meaningful content, add the AI message and hide typing indicator
+                        if (!hasAddedAiMessage) {
+                            hasAddedAiMessage = true;
+                            setMessages((prev) => [...prev, aiMessage]);
+                            setIsAiTyping(false);
+                        }
+                        
+                        // If we were showing the typing indicator, hide it now that we're receiving data again
+                        if (isStreamingPaused) {
+                            isStreamingPaused = false;
+                            setIsAiTyping(false);
+                        }
+                        
+                        streamedContent += chunk;
+                        
+                        // Only update the UI periodically to avoid too many re-renders
+                        const now = Date.now();
+                        if (now - lastUpdateTime > UPDATE_INTERVAL) {
+                            setMessages((prev) => 
+                                prev.map((msg) => 
+                                    msg.id === aiMessageId 
+                                        ? { ...msg, content: streamedContent } 
+                                        : msg
+                                )
+                            );
+                            lastUpdateTime = now;
+                        }
+                    }
+                }
+            };
+            
+            try {
+                await streamReader();
+            } finally {
+                clearInterval(timeoutChecker);
+                // Ensure typing indicator is turned off when streaming ends
+                setIsAiTyping(false);
+                
+                // If we never got any content, at least show an error message
+                if (!hasAddedAiMessage) {
+                    const errorMessage: Message = {
+                        id: aiMessageId,
+                        content: "Sorry, I couldn't generate a response. Please try again.",
+                        sender: "ai",
+                    };
+                    setMessages((prev) => [...prev, errorMessage]);
+                }
+            }
         } catch (error) {
             console.error("Error fetching AI response:", error);
 
-            const errorResponse: Message = {
-                id: Date.now() + 2,
+            // Add an error message if we haven't added the AI message yet
+            const errorMessage: Message = {
+                id: aiMessageId,
                 content: "Error: Unable to fetch response from the server.",
                 sender: "ai",
             };
-
-            setMessages((prev) => [...prev, errorResponse]);
-        } finally {
-            setIsAiTyping(false);
+            setMessages((prev) => 
+                hasAddedAiMessage 
+                    ? prev.map((msg) => 
+                        msg.id === aiMessageId 
+                            ? { ...msg, content: errorMessage.content } 
+                            : msg
+                      )
+                    : [...prev, errorMessage]
+            );
         }
     };
 
