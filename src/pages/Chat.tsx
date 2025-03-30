@@ -23,49 +23,6 @@ interface CacheInfo {
     messages: Message[];
 }
 
-// Function to format message content with appropriate styling based on sender
-const formatMessageContent = (content: string, sender: "user" | "ai") => {
-    let parsedContent = String(marked.parse(content));
-    
-    if (sender === "ai") {
-        // Apply AI message styling
-        parsedContent = parsedContent
-            .replace(
-                /<table>/g,
-                `<table class="table-auto border-collapse w-full text-xs text-left text-gray-700 border border-gray-300 my-2">`
-            )
-            .replace(
-                /<th>/g,
-                `<th class="border border-gray-300 p-1 sm:p-2 bg-[#ec8e13] text-white text-xs">`
-            )
-            .replace(
-                /<td>/g,
-                `<td class="border border-gray-300 p-1 sm:p-2 text-xs">`
-            )
-            .replace(/<a /g, '<a class="text-[#ec8e13] underline" ')
-            .replace(/<code>/g, '<code class="bg-gray-100 px-1 rounded text-gray-800">')
-            .replace(/<pre>/g, '<pre class="bg-gray-100 p-2 rounded my-2 overflow-auto text-gray-800">')
-            .replace(/<ul>/g, '<ul class="list-disc pl-5 my-2">')
-            .replace(/<ol>/g, '<ol class="list-decimal pl-5 my-2">')
-            .replace(/<li>/g, '<li class="mb-1">')
-            .replace(/<blockquote>/g, '<blockquote class="border-l-2 border-gray-300 pl-3 italic my-2">');
-    } else {
-        // Apply user message styling - make links and other elements visible on dark background
-        parsedContent = parsedContent
-            .replace(/<a /g, '<a class="text-white underline" ')
-            .replace(/<code>/g, '<code class="bg-[#99784D] px-1 rounded">')
-            .replace(/<pre>/g, '<pre class="bg-[#99784D] p-2 rounded my-2 overflow-auto">')
-            .replace(/<strong>/g, '<strong class="font-bold">')
-            .replace(/<em>/g, '<em class="italic">')
-            .replace(/<ul>/g, '<ul class="list-disc pl-5 my-2">')
-            .replace(/<ol>/g, '<ol class="list-decimal pl-5 my-2">')
-            .replace(/<li>/g, '<li class="mb-1">')
-            .replace(/<blockquote>/g, '<blockquote class="border-l-2 border-white pl-3 italic my-2">');
-    }
-    
-    return parsedContent;
-};
-
 const Chat = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
@@ -359,16 +316,29 @@ const Chat = () => {
                                         <div
                                             className="text-xs sm:text-sm"
                                             dangerouslySetInnerHTML={{
-                                                __html: formatMessageContent(message.content, "ai")
+                                                __html: String(
+                                                    marked.parse(
+                                                        message.content
+                                                    )
+                                                )
+                                                    .replace(
+                                                        /<table>/g,
+                                                        `<table class="table-auto border-collapse w-full text-xs text-left text-gray-700 border border-gray-300 my-2">`
+                                                    )
+                                                    .replace(
+                                                        /<th>/g,
+                                                        `<th class="border border-gray-300 p-1 sm:p-2 bg-[#ec8e13] text-white text-xs">`
+                                                    )
+                                                    .replace(
+                                                        /<td>/g,
+                                                        `<td class="border border-gray-300 p-1 sm:p-2 text-xs">`
+                                                    ),
                                             }}
                                         />
                                     ) : (
-                                        <div
-                                            className="text-xs sm:text-sm"
-                                            dangerouslySetInnerHTML={{
-                                                __html: formatMessageContent(message.content, "user")
-                                            }}
-                                        />
+                                        <p className="text-xs sm:text-sm">
+                                            {message.content}
+                                        </p>
                                     )}
                                 </div>
                                 {message.sender === "user" && (
