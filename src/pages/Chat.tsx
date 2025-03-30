@@ -10,6 +10,12 @@ import { UserButton, useUser } from "@clerk/clerk-react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 
+// Configure marked for better markdown rendering
+marked.setOptions({
+    breaks: true,  // Add line breaks on single line breaks
+    gfm: true      // Enable GitHub Flavored Markdown
+});
+
 interface Message {
     id: number;
     content: string;
@@ -236,6 +242,62 @@ const Chat = () => {
                     name="viewport"
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
                 />
+                <style>{`
+                    .markdown-content pre code {
+                        white-space: pre;
+                        overflow-x: auto;
+                        display: block;
+                        padding: 0.5rem;
+                        line-height: 1.5;
+                    }
+                    
+                    .markdown-content ul {
+                        list-style-type: disc;
+                        padding-left: 1.5rem;
+                    }
+                    
+                    .markdown-content ol {
+                        list-style-type: decimal;
+                        padding-left: 1.5rem;
+                    }
+                    
+                    .markdown-content p {
+                        margin-bottom: 0.75rem;
+                    }
+                    
+                    .markdown-content h1, 
+                    .markdown-content h2, 
+                    .markdown-content h3 {
+                        font-weight: bold;
+                        margin-top: 1rem;
+                        margin-bottom: 0.5rem;
+                    }
+                    
+                    .markdown-content h1 {
+                        font-size: 1.25rem;
+                    }
+                    
+                    .markdown-content h2 {
+                        font-size: 1.125rem;
+                    }
+                    
+                    .markdown-content h3 {
+                        font-size: 1rem;
+                    }
+                    
+                    .markdown-content blockquote {
+                        border-left: 3px solid #ec8e13;
+                        padding-left: 0.75rem;
+                        margin: 0.75rem 0;
+                        font-style: italic;
+                    }
+                    
+                    .markdown-content table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 0.75rem 0;
+                    }
+                `}</style>
             </Helmet>
             <div className="flex flex-col h-[100dvh] bg-gray-50 text-gray-800">
                 {/* Header */}
@@ -314,7 +376,7 @@ const Chat = () => {
                                 >
                                     {message.sender === "ai" ? (
                                         <div
-                                            className="text-xs sm:text-sm"
+                                            className="text-xs sm:text-sm markdown-content"
                                             dangerouslySetInnerHTML={{
                                                 __html: String(
                                                     marked.parse(
@@ -332,7 +394,55 @@ const Chat = () => {
                                                     .replace(
                                                         /<td>/g,
                                                         `<td class="border border-gray-300 p-1 sm:p-2 text-xs">`
-                                                    ),
+                                                    )
+                                                    .replace(
+                                                        /<a /g,
+                                                        `<a class="text-[#ec8e13] underline hover:text-[#99784D] transition-colors" `
+                                                    )
+                                                    .replace(
+                                                        /<code>/g,
+                                                        `<code class="bg-gray-100 px-1 rounded text-gray-800 font-mono text-xs">`
+                                                    )
+                                                    .replace(
+                                                        /<pre>/g,
+                                                        `<pre class="bg-gray-100 p-2 rounded my-2 overflow-auto text-gray-800 font-mono text-xs">`
+                                                    )
+                                                    .replace(
+                                                        /<ul>/g,
+                                                        `<ul class="list-disc pl-5 my-2">`
+                                                    )
+                                                    .replace(
+                                                        /<ol>/g,
+                                                        `<ol class="list-decimal pl-5 my-2">`
+                                                    )
+                                                    .replace(
+                                                        /<li>/g,
+                                                        `<li class="mb-1">`
+                                                    )
+                                                    .replace(
+                                                        /<blockquote>/g,
+                                                        `<blockquote class="border-l-2 border-[#ec8e13] pl-3 my-2 italic">`
+                                                    )
+                                                    .replace(
+                                                        /<h1>/g,
+                                                        `<h1 class="text-lg font-bold my-2">`
+                                                    )
+                                                    .replace(
+                                                        /<h2>/g,
+                                                        `<h2 class="text-base font-bold my-2">`
+                                                    )
+                                                    .replace(
+                                                        /<h3>/g,
+                                                        `<h3 class="text-sm font-bold my-2">`
+                                                    )
+                                                    .replace(
+                                                        /<p>/g,
+                                                        `<p class="mb-2">`
+                                                    )
+                                                    .replace(
+                                                        /<\/p>/g,
+                                                        `</p>`
+                                                    )
                                             }}
                                         />
                                     ) : (
