@@ -6,6 +6,7 @@ import Chat from './pages/Chat';
 import PendingApproval from './pages/PendingApproval';
 import AdminDashboard from './pages/AdminDashboard';
 import Landing from './pages/Landing';
+import TokenDebug from './components/TokenDebug';
 import { HelmetProvider } from 'react-helmet-async';
 
 export default function App() {
@@ -54,6 +55,23 @@ export default function App() {
                             <>
                                 <SignedIn>
                                     <Chat />
+                                </SignedIn>
+                                <SignedOut>
+                                    <RedirectToSignIn />
+                                </SignedOut>
+                            </>
+                        }
+                    />
+
+                    {/* Debug route - only for development */}
+                    <Route
+                        path="/debug/token"
+                        element={
+                            <>
+                                <SignedIn>
+                                    <div className="p-8">
+                                        <TokenDebug />
+                                    </div>
                                 </SignedIn>
                                 <SignedOut>
                                     <RedirectToSignIn />
