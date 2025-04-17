@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Send } from "lucide-react";
 import TypingIndicator from "@/components/TypingIndicator";
 import { marked } from "marked"; // Import marked for Markdown conversion
-import { UserButton, useUser } from "@clerk/clerk-react";
+import { UserButton, useUser, useOrganization } from "@clerk/clerk-react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -36,6 +36,7 @@ const Chat = () => {
     const [contextCache, setContextCache] = useState<CacheInfo | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { user } = useUser();
+    const { organization } = useOrganization();
     const navigate = useNavigate();
 
     const scrollToBottom = () => {
@@ -86,13 +87,13 @@ const Chat = () => {
         let hasAddedAiMessage = false;
 
         try {
+            const orgSlug = organization?.slug;
             const response = await fetch(
-                `${import.meta.env.VITE_DO_BACKEND_URL}/ask?question=${encodeURIComponent(
-                    input
-                )}`,
+                `${import.meta.env.VITE_DO_BACKEND_URL}/ask`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question: input, organizationSlug: orgSlug }),
                 }
             );
 
