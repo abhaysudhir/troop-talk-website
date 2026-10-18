@@ -69,14 +69,9 @@
 .tt-hero .tt-button { margin-top: 30px; }
 .tt-hero-preview { display: inline-flex; align-items: center; gap: 11px; margin-left: 22px; color: #e1e0d4; font-size: 13px; }
 .tt-hero-preview:hover { color: var(--tt-orange); }
-.tt-photo-caption { position: absolute; bottom: 28px; right: 0; display: flex; align-items: center; gap: 9px; color: #f5f0e5da; font-size: 10px; letter-spacing: .015em; }
-.tt-photo-caption span { width: 4px; height: 4px; background: var(--tt-orange); border-radius: 50%; }
 .tt-example-section { padding-block: 100px 104px; scroll-margin-top: 28px; }
 .tt-example-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 96px; align-items: start; }
 .tt-eyebrow-dark { color: #677057; }
-.tt-section-intro h2 { margin-top: 18px; }
-.tt-section-intro > p:not(.tt-eyebrow) { max-width: 370px; margin-top: 20px; color: #5d6255; font-size: 16px; line-height: 1.7; }
-.tt-section-intro > p + p:not(.tt-eyebrow) { margin-top: 12px; }
 .tt-example-picker { max-width: 330px; margin-top: 30px; }
 .tt-example-picker > p { margin-bottom: 9px; font-size: 11px; font-weight: 600; color: #657054; text-transform: uppercase; letter-spacing: .09em; }
 .tt-example-picker button { width: 100%; padding: 10px 0; border: 0; border-bottom: 1px solid #d7d9c9; background: none; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: #69705d; font-size: 14px; text-align: left; transition: color .15s; }
@@ -139,7 +134,6 @@
 .tt-footer-bottom { margin-top: 29px; padding-top: 18px; border-top: 1px solid #f5f0e51a; display: flex; align-items: center; gap: 26px; font-size: 10px; color: #aeb79f; }
 .tt-footer-bottom a { color: inherit; }
 .tt-footer-bottom a:hover { color: var(--tt-cream); }
-.tt-photo-credit { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; }
 
 @media (min-width: 1500px) {
     .tt-hero-inner { min-height: 740px; padding-top: 77px; }
@@ -176,8 +170,6 @@
     .tt-hero-preview { display: flex; width: fit-content; margin: 16px 0 0; }
     .tt-example-section { padding-block: 64px; }
     .tt-example-grid { grid-template-columns: 1fr; gap: 34px; }
-    .tt-section-intro h2 br { display: none; }
-    .tt-section-intro > p:not(.tt-eyebrow) { max-width: 560px; }
     .tt-example-picker { display: flex; gap: 18px; align-items: center; max-width: none; flex-wrap: wrap; margin-top: 23px; }
     .tt-example-picker > p { flex-basis: 100%; margin-bottom: -8px; }
     .tt-example-picker button { width: auto; gap: 18px; border-bottom-color: #d0d4bf; font-size: 12px; padding-bottom: 8px; }
@@ -219,12 +211,9 @@
     .tt-hero-photo { top: auto; bottom: 0; width: 100%; height: 49%; }
     .tt-hero-photo img { object-position: center 62%; }
     .tt-hero::after { background: linear-gradient(180deg, #252a22 0%, #252a22 47%, #252a22ee 55%, #252a2222 78%, #252a2255 100%); }
-    .tt-photo-caption { bottom: 17px; font-size: 9px; right: 0; left: 0; justify-content: center; }
     .tt-example-section { padding-block: 49px 52px; }
     .tt-example-grid { gap: 25px; }
     .tt-site h2 { font-size: 34px; }
-    .tt-section-intro h2 { margin-top: 14px; }
-    .tt-section-intro > p:not(.tt-eyebrow) { font-size: 15px; margin-top: 17px; }
     .tt-example-picker { column-gap: 19px; row-gap: 14px; margin-top: 24px; }
     .tt-example-picker button { gap: 8px; font-size: 11px; padding-bottom: 6px; min-height: 44px; }
     .tt-example-picker button svg { width: 12px; }
@@ -267,7 +256,10 @@
     .tt-contact { font-size: 11px; gap: 5px; }
     .tt-footer-top { gap: 15px; }
     .tt-footer-bottom { flex-wrap: wrap; column-gap: 19px; row-gap: 11px; margin-top: 23px; font-size: 10px; }
-    .tt-photo-credit { margin-left: 0; flex-basis: 100%; }
+}
+
+@media (min-width: 541px) and (max-width: 800px) {
+    .tt-nav-links > a:last-child { display: none; }
 }
 
 @media (max-width: 360px) {

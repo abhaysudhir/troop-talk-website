@@ -1,51 +1,15 @@
-import { useState } from "react";
+import "./Landing.css";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
-import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Check, Mail, Plus, UserRound } from "lucide-react";
-import "./Landing.css";
-
-const examples = [
-    {
-        label: "Packing list",
-        question: "What should I bring to the campout?",
-        intro: "For this campout, the packing list is:",
-        items: ["Sleeping bag & sleeping pad", "Rain jacket and a warm layer", "Water bottle", "Mess kit & utensils", "Headlamp or flashlight"],
-        note: "Check the trip details for anything extra your patrol needs.",
-    },
-    {
-        label: "Departure time",
-        question: "When are we leaving on Saturday?",
-        intro: "Meet at the troop's usual meeting place at 8:00 a.m. on Saturday.",
-        items: ["Bring your signed permission form", "Have your gear packed and ready to load"],
-        note: "The plan is to head out together after a quick gear check.",
-    },
-    {
-        label: "Next meeting",
-        question: "What are we doing at the next meeting?",
-        intro: "This meeting is about getting ready for the campout.",
-        items: ["Plan meals with your patrol", "Sort out who is bringing shared gear", "Review the packing list"],
-        note: "Bring a notebook, a pencil, and your meal ideas.",
-    },
-];
-
-function TentMark({ className = "" }: { className?: string }) {
-    return (
-        <svg className={className} width="48" height="45" viewBox="0 0 48 45" fill="none" aria-hidden="true">
-            <path d="M4 38 22 7l18 31H4Z" fill="currentColor" />
-            <path d="m22 7 4 31H12L22 7Z" fill="var(--tt-cream, #f5f0e5)" />
-            <path d="m22 7 4 31h-6l2-31Z" fill="var(--tt-night, #252a22)" />
-            <path d="m19 3 5 8m1-8-5 8M2 39h43" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-            <path d="m40 15-5 10h3l-5 9h14l-5-9h3l-5-10Z" fill="var(--tt-moss, #a8ad87)" />
-        </svg>
-    );
-}
+import { ArrowDown, ArrowUpRight, BookOpen, Mail, Plus } from "lucide-react";
+import TentMark from "../components/TentMark";
+import RoleExamples from "../components/RoleExamples";
+import TroopInterest from "../components/TroopInterest";
 
 export default function Landing() {
     const { isSignedIn } = useAuth();
     const destination = isSignedIn ? "/chat" : "/sign-in";
-    const [exampleIndex, setExampleIndex] = useState(0);
-    const example = examples[exampleIndex];
 
     return (
         <>
@@ -66,6 +30,7 @@ export default function Landing() {
                         <nav className="tt-nav-links" aria-label="Main navigation">
                             <a href="#how-it-works">How it works</a>
                             <a href="#try-a-question">Try a question</a>
+                            <a href="#bring-your-troop">For your troop</a>
                         </nav>
                         <Link className="tt-signin" to={destination}>
                             {isSignedIn ? "Open chat" : "Sign in"}<ArrowUpRight size={16} aria-hidden="true" />
@@ -87,47 +52,10 @@ export default function Landing() {
                                 <Link to={destination} className="tt-button tt-button-orange">Open Troop Talk<ArrowUpRight size={20} aria-hidden="true" /></Link>
                                 <a href="#try-a-question" className="tt-hero-preview">Take a look first<ArrowDown size={15} aria-hidden="true" /></a>
                             </div>
-                            <div className="tt-photo-caption"><span />A little less searching. A little more Scouting.</div>
                         </div>
                     </section>
 
-                    <section className="tt-example-section" id="try-a-question" aria-labelledby="tt-example-title">
-                        <div className="tt-container tt-example-grid">
-                            <div className="tt-section-intro">
-                                <p className="tt-eyebrow tt-eyebrow-dark">The everyday questions</p>
-                                <h2 id="tt-example-title">What do we need<br /> for Saturday?</h2>
-                                <p>It's a simple question. The answer might be three weeks deep in your inbox.</p>
-                                <p>Troop Talk searches imported troop emails and Scouting references, then helps you make sense of what it finds.</p>
-                                <div className="tt-example-picker" role="group" aria-label="Choose an example question">
-                                    <p>Try an example</p>
-                                    {examples.map((item, index) => (
-                                        <button key={item.label} type="button" aria-pressed={exampleIndex === index} aria-controls="tt-example-answer" onClick={() => setExampleIndex(index)}>
-                                            {item.label}<ArrowRight size={18} aria-hidden="true" />
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="tt-conversation">
-                                <div className="tt-conversation-header"><span>Example conversation</span><span>Try a question</span></div>
-                                <div className="tt-conversation-body" id="tt-example-answer" aria-live="polite" aria-atomic="true">
-                                    <div className="tt-message tt-message-question">
-                                        <span className="tt-avatar tt-avatar-user"><UserRound size={19} strokeWidth={1.8} aria-hidden="true" /><span className="tt-sr-only">You ask</span></span>
-                                        <p>{example.question}</p>
-                                    </div>
-                                    <div className="tt-message tt-message-answer">
-                                        <span className="tt-avatar tt-avatar-bot"><TentMark /><span className="tt-sr-only">Troop Talk answers</span></span>
-                                        <div>
-                                            <p>{example.intro}</p>
-                                            <ul>{example.items.map(item => <li key={item}><Check size={16} strokeWidth={1.8} aria-hidden="true" /><span>{item}</span></li>)}</ul>
-                                            <p className="tt-answer-note">{example.note}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="tt-conversation-footer"><span>Illustrative example, not live troop information.</span><Link to={destination} aria-label="Open Troop Talk to ask your own question"><ArrowUpRight size={18} aria-hidden="true" /></Link></div>
-                            </div>
-                        </div>
-                    </section>
+                    <RoleExamples destination={destination} />
 
                     <section className="tt-sources" id="how-it-works" aria-labelledby="tt-sources-title">
                         <div className="tt-container">
@@ -150,14 +78,16 @@ export default function Landing() {
 
                     <section className="tt-faq-section" aria-labelledby="tt-faq-title">
                         <div className="tt-container tt-faq-grid">
-                            <div><p className="tt-eyebrow tt-eyebrow-dark">Before you head out</p><h2 id="tt-faq-title">A couple of<br /> good questions.</h2></div>
+                            <div><p className="tt-eyebrow tt-eyebrow-dark">Before you head out</p><h2 id="tt-faq-title">A few<br /> good questions.</h2></div>
                             <div className="tt-faq-list">
                                 <details><summary>Who is Troop Talk for?<Plus size={19} aria-hidden="true" /></summary><p>Scouts, parents, and troop leaders who need help finding information in troop emails or understanding Scouting requirements.</p></details>
-                                <details><summary>Can I use it with my troop?<Plus size={19} aria-hidden="true" /></summary><p>Troop Talk started with Troop 125. If you'd like to bring it to your troop, <a href="mailto:abhay.sudhir08@gmail.com?subject=Troop%20Talk%20for%20my%20troop">get in touch with Abhay</a> to talk through setup.</p></details>
+                                <details><summary>Can I use it with my troop?<Plus size={19} aria-hidden="true" /></summary><p>Troop Talk started with Troop 125. If you'd like to bring it to your troop, <a href="#bring-your-troop">tell us about your troop</a> to talk through setup.</p></details>
                                 <details><summary>Does it have the latest troop updates?<Plus size={19} aria-hidden="true" /></summary><p>It can only search the material that's been added to its knowledge base. It doesn't automatically follow your inbox, so confirm recent changes with your troop's communications or a leader.</p></details>
                             </div>
                         </div>
                     </section>
+
+                    <TroopInterest />
 
                     <section className="tt-closing" aria-labelledby="tt-closing-title">
                         <div className="tt-container tt-closing-inner"><div><p className="tt-eyebrow">Got a question?</p><h2 id="tt-closing-title">Start with Troop Talk.</h2></div><Link to={destination} className="tt-button tt-button-orange">{isSignedIn ? "Back to your chat" : "Open Troop Talk"}<ArrowUpRight size={20} aria-hidden="true" /></Link></div>
@@ -166,8 +96,8 @@ export default function Landing() {
 
                 <footer className="tt-footer">
                     <div className="tt-container">
-                        <div className="tt-footer-top"><a href="#top" className="tt-brand"><TentMark className="tt-brand-mark" /><span>Troop Talk<span className="tt-brand-period">.</span></span></a><p>For the questions before the adventure.</p><a href="mailto:abhay.sudhir08@gmail.com" className="tt-contact">Say hello to Abhay<ArrowUpRight size={16} aria-hidden="true" /></a></div>
-                        <div className="tt-footer-bottom"><span>© {new Date().getFullYear()} Troop Talk</span><a href="/terms-and-conditions.html">Terms & conditions</a><a className="tt-photo-credit" href="https://unsplash.com/photos/bonfire-in-the-middle-of-forest-during-night-time-kSj_xTPMrx4" target="_blank" rel="noreferrer">Photo by Patrick Hendry / Unsplash<ArrowUpRight size={12} aria-hidden="true" /></a></div>
+                        <div className="tt-footer-top"><a href="#top" className="tt-brand"><TentMark className="tt-brand-mark" /><span>Troop Talk<span className="tt-brand-period">.</span></span></a><p>For the questions before the adventure.</p><a href="#bring-your-troop" className="tt-contact">Bring Troop Talk to your troop<ArrowUpRight size={16} aria-hidden="true" /></a></div>
+                        <div className="tt-footer-bottom"><span>© {new Date().getFullYear()} Troop Talk</span><a href="/terms-and-conditions.html">Terms & conditions</a></div>
                     </div>
                 </footer>
             </div>
